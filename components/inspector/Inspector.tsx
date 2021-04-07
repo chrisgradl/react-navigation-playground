@@ -10,9 +10,9 @@ import { Button, Checkbox, TextInput, Title } from "react-native-paper";
 import { selectRootId, setRootId } from "../../redux/RootIdReducer";
 import InspectorItem, {
   InspectorItemSpace,
-  NavigationTypeItem,
 } from "./InspectorItem";
 import { selectNavigator } from "../../redux/SelectedInspectorReducer";
+import NavigationTypeItem from "./NavigationTypeItem";
 
 interface Props {}
 

@@ -9,15 +9,16 @@ import {
   Title,
 } from "react-native-paper";
 import { useAppSelector } from "../../redux/store";
-import { deleteScreen, editScreen } from "../../redux/NavigatorReducer";
+import {
+  deleteScreen,
+  editScreen as editScreenAction,
+} from "../../redux/NavigatorReducer";
 import { useDispatch } from "react-redux";
 import { ComponentType } from "../../types";
 import { selectScreen } from "../../redux/SelectedInspectorReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 
-interface Props {}
-
-const ScreenInspector: React.FC<Props> = () => {
+const ScreenInspector: React.FC = () => {
   const screen = useAppSelector(selectScreen);
   const { navigatorId } = useAppSelector((state) => state.inspector);
   const navigators = useAppSelector((state) => state.navigators);
@@ -30,6 +31,9 @@ const ScreenInspector: React.FC<Props> = () => {
     return <Title>Select Screen</Title>;
   }
 
+  const editScreen = (data) =>
+    dispatch(editScreenAction({ screenId: screen.id, navigatorId, data }));
+
   return (
     <View>
       <TextInput
@@ -38,13 +42,9 @@ const ScreenInspector: React.FC<Props> = () => {
         dense
         value={screen.name}
         onChangeText={(value) =>
-          dispatch(
-            editScreen({
-              screenId: screen.id,
-              navigatorId,
-              data: { name: value },
-            })
-          )
+          editScreen({
+            name: value,
+          })
         }
       />
       <InspectorItemSpace />
@@ -52,18 +52,12 @@ const ScreenInspector: React.FC<Props> = () => {
         <Subheading>Component</Subheading>
         <RadioButton.Group
           onValueChange={(value) =>
-            dispatch(
-              editScreen({
-                screenId: screen.id,
-                navigatorId,
-                data: {
-                  component: {
-                    type: value as ComponentType,
-                    navigatorId: undefined,
-                  },
-                },
-              })
-            )
+            editScreen({
+              component: {
+                type: value as ComponentType,
+                navigatorId: undefined,
+              },
+            })
           }
           value={screen.component.type}
         >
@@ -77,18 +71,12 @@ const ScreenInspector: React.FC<Props> = () => {
             <Picker
               selectedValue={screen.component.navigatorId}
               onValueChange={(value) =>
-                dispatch(
-                  editScreen({
-                    screenId: screen.id,
-                    navigatorId,
-                    data: {
-                      component: {
-                        navigatorId: value,
-                        type: ComponentType.Navigator,
-                      },
-                    },
-                  })
-                )
+                editScreen({
+                  component: {
+                    navigatorId: value,
+                    type: ComponentType.Navigator,
+                  },
+                })
               }
             >
               <Picker.Item label={"Select a Navigator"} value={undefined} />

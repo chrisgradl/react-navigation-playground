@@ -4,7 +4,7 @@ import Smartphone from "./Smartphone";
 import PlaygroundRenderer from "./renderer/PlaygroundRenderer";
 import { useAppSelector } from "../redux/store";
 import { Appbar } from "react-native-paper";
-import { PlaygroundState } from "../types";
+import * as Linking from "expo-linking";
 import NavigatorList from "./NavigatorList";
 import Inspector from "./inspector/Inspector";
 import ScreenInspector from "./inspector/ScreenInspector";
@@ -23,7 +23,14 @@ const Playground: React.FC<Props> = () => {
     <View style={{ flex: 1 }}>
       <Appbar.Header>
         <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
-        <Appbar.Action icon="github" onPress={() => ""} />
+        <Appbar.Action
+          icon="github"
+          onPress={() =>
+            Linking.openURL(
+              "https://github.com/chrisgradl/react-navigation-playground"
+            )
+          }
+        />
       </Appbar.Header>
       <View style={{ flex: 1, flexDirection: "row", paddingTop: 8 }}>
         <View style={{ flex: 1, padding: 16 }}>
