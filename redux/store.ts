@@ -1,17 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import navigators from "./NavigatorReducer";
-import selectedNavigatorId from "./SelectedNavigatorReducer";
 import rootId from "./RootIdReducer";
-import selectedScreenId from "./SelectedScreenReducer";
 import inspector from "./SelectedInspectorReducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const store = configureStore({
   reducer: {
     navigators,
-    selectedNavigatorId,
     rootId,
-    selectedScreenId,
     inspector,
   },
   devTools: process.env.NODE_ENV !== "production",
