@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  ComponentType,
+  ComponentType, NavigatorRecord,
   PlaygroundNavigator,
   PlaygroundNavigatorType,
   PlaygroundScreen,
 } from "../types";
 
-const initialState: Record<string, PlaygroundNavigator> = {
+const initialState: NavigatorRecord = {
   "1": {
     id: "1",
     name: "RootNavigator Tab",

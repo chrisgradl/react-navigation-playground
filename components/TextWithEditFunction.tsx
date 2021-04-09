@@ -39,11 +39,14 @@ const TextWithEditFunction: React.FC<Props> = ({
             style={{ flex: 1 }}
             onBlur={(e) => {
               if (!divRef.current.contains(e.relatedTarget)) {
+                //only submit if no button inside the textinput is clicked
                 onValueChangeSubmit(text);
                 setShowEdit(false);
+              } else {
+                //check if tab key is pressed
               }
             }}
-            blurOnSubmit={false}
+            blurOnSubmit={true}
             onSubmitEditing={() => {
               onValueChangeSubmit(text);
               setShowEdit(false);

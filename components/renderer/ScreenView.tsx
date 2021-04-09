@@ -11,10 +11,6 @@ const ScreenView: React.FC<{ parentNavigatorId: string; navigation: any }> = ({
 }) => {
   const { navigators } = usePlaygroundState();
 
-  const parentNavigator = navigators[parentNavigatorId];
-
-  console.log(parentNavigator);
-
   const screens = Object.values(navigators).reduce((prevvalue, currValue) => {
     const screens = Object.values(currValue.screens);
     return [...prevvalue, ...screens];

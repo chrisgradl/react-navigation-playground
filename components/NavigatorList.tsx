@@ -46,7 +46,7 @@ const NavigatorList: React.FC = () => {
     <View>
       <ScrollView style={{ flex: 1 }}>
         {navigatorArray.map(({ id, name, screens, type }) => (
-          <>
+          <React.Fragment key={id}>
             <NavItem
               selected={
                 inspector.type === "Navigator" && id === inspector.navigatorId
@@ -75,12 +75,12 @@ const NavigatorList: React.FC = () => {
                       })
                     )
                   }
-                  key={id}
+                  key={screen.id}
                   title={getTitleFromScreen(screen, navigators)}
                 />
               ))}
             </View>
-          </>
+          </React.Fragment>
         ))}
       </ScrollView>
       <AddNewNavigator />

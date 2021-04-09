@@ -44,7 +44,7 @@ const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
       {Object.values(screens).map((screen) => {
         const { component, name, id: screenId } = screen;
         return (
-          <>
+          <React.Fragment key={id}>
             {/*
               // @ts-ignore */}
             <Navigation.Screen
@@ -59,7 +59,7 @@ const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
                 )
               }
             </Navigation.Screen>
-          </>
+          </React.Fragment>
         );
       })}
     </Navigation.Navigator>

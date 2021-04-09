@@ -38,6 +38,7 @@ const ScreenInspector: React.FC = () => {
   return (
     <View>
       <TextWithEditFunction
+        key={"screennameedit" + screen.id}
         label={"Name"}
         value={screen.name}
         onValueChangeSubmit={(value) =>

@@ -15,11 +15,13 @@ const AddNewNavigator: React.FC<Props> = () => {
       onPress={() => {
         const id = nanoid();
         dispatch(addNavigator(id));
-        setSelectedInspector({
-          type: "Navigator",
-          screenId: undefined,
-          navigatorId: id,
-        });
+        dispatch(
+          setSelectedInspector({
+            type: "Navigator",
+            screenId: undefined,
+            navigatorId: id,
+          })
+        );
       }}
     >
       Add Navigator

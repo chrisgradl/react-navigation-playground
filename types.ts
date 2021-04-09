@@ -4,13 +4,11 @@ export enum PlaygroundNavigatorType {
   Drawer = "Drawer",
 }
 
-
-
 export interface PlaygroundNavigator {
   id: string;
   type: PlaygroundNavigatorType;
   //navigatorProps?: StackNavigatorProps | BottomTabNavigatorProps | DrawerProps;
-  screens?: Record<string, PlaygroundScreen>
+  screens?: Record<string, PlaygroundScreen>;
   name: string;
 }
 
@@ -32,9 +30,9 @@ export interface PlaygroundScreen {
     | DrawerNavigationOptions;*/
 }
 
+export type NavigatorRecord = Record<string, PlaygroundNavigator>;
+
 export interface PlaygroundState {
   rootId: string;
-  navigators: {
-    [key: string]: PlaygroundNavigator;
-  };
+  navigators: NavigatorRecord;
 }

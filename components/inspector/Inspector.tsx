@@ -37,6 +37,7 @@ const Inspector: React.FC<Props> = () => {
   return (
     <View>
       <TextWithEditFunction
+        key={"screennameedit" + id}
         label={"Name"}
         value={name}
         onValueChangeSubmit={(value) => {
