@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { ComponentType } from "../../types";
 import { selectScreen } from "../../redux/SelectedInspectorReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
+import TextWithEditFunction from "../TextWithEditFunction";
 
 const ScreenInspector: React.FC = () => {
   const screen = useAppSelector(selectScreen);
@@ -36,12 +37,10 @@ const ScreenInspector: React.FC = () => {
 
   return (
     <View>
-      <TextInput
+      <TextWithEditFunction
         label={"Name"}
-        mode={"outlined"}
-        dense
         value={screen.name}
-        onChangeText={(value) =>
+        onValueChangeSubmit={(value) =>
           editScreen({
             name: value,
           })

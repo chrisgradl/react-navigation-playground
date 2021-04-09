@@ -18,6 +18,7 @@ const slice = createSlice({
     setSelectedInspector: (state, action: PayloadAction<SelectedInspector>) =>
       action.payload,
   },
+
 });
 
 export const { setSelectedInspector } = slice.actions;

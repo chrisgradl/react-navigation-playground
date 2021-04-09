@@ -5,20 +5,11 @@ import {
   PlaygroundNavigatorType,
   PlaygroundScreen,
 } from "../types";
-import { nanoid } from "nanoid";
 
-const initialState: { [key: string]: PlaygroundNavigator } = {
+const initialState: Record<string, PlaygroundNavigator> = {
   "1": {
     id: "1",
     name: "RootNavigator Tab",
-    navigatorProps: {
-      tabBarOptions: {
-        activeTintColor: "blueviolet",
-        tabStyle: {
-          backgroundColor: "orange",
-        },
-      },
-    },
     screens: {
       screen1: {
         component: {
@@ -27,8 +18,6 @@ const initialState: { [key: string]: PlaygroundNavigator } = {
         },
         name: "screen1",
         id: "screen1",
-
-        screenOptions: {},
       },
       screen2: {
         component: {
@@ -37,8 +26,6 @@ const initialState: { [key: string]: PlaygroundNavigator } = {
         },
         name: "screen2",
         id: "screen2",
-
-        screenOptions: {},
       },
     },
     type: PlaygroundNavigatorType.Tab,
@@ -55,9 +42,6 @@ const initialState: { [key: string]: PlaygroundNavigator } = {
         },
         name: "screen4",
         id: "4",
-        screenOptions: {
-          title: "Hello 1",
-        },
       },
     },
   },
@@ -73,9 +57,6 @@ const initialState: { [key: string]: PlaygroundNavigator } = {
         },
         name: "screen5",
         id: "5",
-        screenOptions: {
-          title: "Hello 2",
-        },
       },
     },
   },
@@ -85,13 +66,12 @@ const slice = createSlice({
   name: "NavigatorReducer",
   initialState,
   reducers: {
-    addNavigator: (state) => {
-      const id = nanoid();
+    addNavigator: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
       state[id] = {
         name: id,
         type: PlaygroundNavigatorType.Stack,
         id,
-        navigatorProps: {},
         screens: {},
       };
     },
@@ -109,17 +89,18 @@ const slice = createSlice({
       };
       state[id] = nextNavigator as any;
     },
-    addScreen: (state, action: PayloadAction<string>) => {
-      const navigatorId = action.payload;
-      const id = nanoid();
-      state[navigatorId].screens[id] = {
+    addScreen: (
+      state,
+      action: PayloadAction<{ navigatorId: string; screenId: string }>
+    ) => {
+      const {navigatorId, screenId} = action.payload;
+      state[navigatorId].screens[screenId] = {
         component: {
           type: ComponentType.View,
           navigatorId: undefined,
         },
-        name: "screen" + id,
-        id,
-        screenOptions: {},
+        name: "screen" + screenId,
+        id: screenId,
       };
     },
     deleteScreen: (

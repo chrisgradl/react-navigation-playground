@@ -1,5 +1,5 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useRef } from "react";
+import { TextInput as RNTextInput, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   addScreen,
@@ -8,11 +8,14 @@ import {
 } from "../../redux/NavigatorReducer";
 import { Button, Checkbox, TextInput, Title } from "react-native-paper";
 import { selectRootId, setRootId } from "../../redux/RootIdReducer";
-import InspectorItem, {
-  InspectorItemSpace,
-} from "./InspectorItem";
-import { selectNavigator } from "../../redux/SelectedInspectorReducer";
+import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
+import {
+  selectNavigator,
+  setSelectedInspector,
+} from "../../redux/SelectedInspectorReducer";
 import NavigationTypeItem from "./NavigationTypeItem";
+import { nanoid } from "nanoid";
+import TextWithEditFunction from "../TextWithEditFunction";
 
 interface Props {}
 
@@ -27,20 +30,18 @@ const Inspector: React.FC<Props> = () => {
     return <Title>please Select a Navigator</Title>;
   }
 
-  const { id, type, name, navigatorProps } = navigator;
+  const { id, name } = navigator;
 
   const isRootNav = id === rootID;
 
   return (
     <View>
-      <TextInput
+      <TextWithEditFunction
         label={"Name"}
-        mode={"outlined"}
-        dense
         value={name}
-        onChangeText={(value) =>
-          dispatch(editNavigator({ id, data: { name: value } }))
-        }
+        onValueChangeSubmit={(value) => {
+          dispatch(editNavigator({ id, data: { name: value } }));
+        }}
       />
       <InspectorItemSpace />
       <InspectorItem>
@@ -60,7 +61,13 @@ const Inspector: React.FC<Props> = () => {
       <Button
         mode={"contained"}
         icon={"plus"}
-        onPress={() => dispatch(addScreen(id))}
+        onPress={() => {
+          const screenId = nanoid();
+          dispatch(addScreen({ navigatorId: id, screenId }));
+          dispatch(
+            setSelectedInspector({ type: "Screen", navigatorId: id, screenId })
+          );
+        }}
       >
         Add new Screen
       </Button>

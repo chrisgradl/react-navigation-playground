@@ -35,14 +35,14 @@ const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
     return <Text>Could not find navigator with id {id}</Text>;
   }
 
-  const { type, screens, navigatorProps } = navigator;
+  const { type, screens } = navigator;
 
   const Navigation = createNavigatorByType(type);
 
   return (
-    <Navigation.Navigator {...(navigatorProps as any)}>
+    <Navigation.Navigator>
       {Object.values(screens).map((screen) => {
-        const { component, name, id: screenId, screenOptions } = screen;
+        const { component, name, id: screenId } = screen;
         return (
           <>
             {/*
@@ -50,7 +50,6 @@ const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
             <Navigation.Screen
               key={"screenId" + screenId}
               name={name}
-              options={screenOptions}
             >
               {(props: any) =>
                 component.type === "Navigator" ? (

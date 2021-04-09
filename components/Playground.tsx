@@ -14,42 +14,58 @@ interface Props {}
 
 const VLine = () => <View style={{ width: 1, backgroundColor: "grey" }} />;
 
-const Playground: React.FC<Props> = () => {
-  const playgroundState = useAppSelector((state) => state);
-
+const InspectorContainer = () => {
   const inspector = useAppSelector((state) => state.inspector);
 
+  if (inspector.type === "Navigator") {
+    return <Inspector />;
+  } else {
+    return <ScreenInspector />;
+  }
+};
+
+const Preview = () => {
+  const playgroundState = useAppSelector((state) => state);
+  return (
+    <Smartphone>
+      <ErrorBoundary>
+        <PlaygroundRenderer playgroundState={playgroundState} />
+      </ErrorBoundary>
+    </Smartphone>
+  );
+};
+
+const Header = () => (
+  <Appbar.Header>
+    <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
+    <Appbar.Action
+      icon="github"
+      onPress={() =>
+        Linking.openURL(
+          "https://github.com/chrisgradl/react-navigation-playground"
+        )
+      }
+    />
+  </Appbar.Header>
+);
+
+const Playground: React.FC<Props> = () => {
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header>
-        <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
-        <Appbar.Action
-          icon="github"
-          onPress={() =>
-            Linking.openURL(
-              "https://github.com/chrisgradl/react-navigation-playground"
-            )
-          }
-        />
-      </Appbar.Header>
+      <Header />
       <View style={{ flex: 1, flexDirection: "row", paddingTop: 8 }}>
         <View style={{ flex: 1, padding: 16 }}>
           <NavigatorList />
         </View>
         <VLine />
         <View style={{ flex: 1, padding: 16 }}>
-          {inspector.type === "Navigator" && <Inspector />}
-          {inspector.type === "Screen" && <ScreenInspector />}
+          <InspectorContainer />
         </View>
         <VLine />
         <View
           style={{ flex: 3, justifyContent: "center", alignItems: "center" }}
         >
-          <Smartphone>
-            <ErrorBoundary>
-              <PlaygroundRenderer playgroundState={playgroundState} />
-            </ErrorBoundary>
-          </Smartphone>
+          <Preview />
         </View>
       </View>
     </View>
