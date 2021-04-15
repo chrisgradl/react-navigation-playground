@@ -12,7 +12,7 @@ const NavItem: React.FC<{
   onPress(): void;
 }> = ({ onPress, selected, title }) => (
   <List.Item
-    titleStyle={selected && { color: "rgb(0, 122, 255)" }}
+    titleStyle={selected && { color: "rgb(0, 122, 255)", fontWeight: "bold" }}
     style={
       selected && {
         borderRadius: 8,

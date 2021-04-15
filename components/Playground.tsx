@@ -4,7 +4,6 @@ import Smartphone from "./Smartphone";
 import PlaygroundRenderer from "./renderer/PlaygroundRenderer";
 import { useAppSelector } from "../redux/store";
 import { Appbar } from "react-native-paper";
-import * as Linking from "expo-linking";
 import NavigatorList from "./NavigatorList";
 import Inspector from "./inspector/Inspector";
 import ScreenInspector from "./inspector/ScreenInspector";
