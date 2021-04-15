@@ -8,6 +8,7 @@ import NavigatorList from "./NavigatorList";
 import Inspector from "./inspector/Inspector";
 import ScreenInspector from "./inspector/ScreenInspector";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemeSwitch from "./ThemeSwitch";
 
 interface Props {}
 
@@ -50,6 +51,9 @@ const Preview = () => {
 const Header = () => (
   <Appbar.Header>
     <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
+
+    <ThemeSwitch />
+
     <Appbar.Action
       icon="github"
       onPress={() =>

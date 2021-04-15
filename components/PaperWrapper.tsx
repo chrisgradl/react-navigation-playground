@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import {
   configureFonts,
   DefaultTheme,
@@ -27,13 +26,13 @@ const fontConfig = {
   },
 };
 
-const theme = {
+const themeWithFonts = {
   ...DefaultTheme,
   fonts: configureFonts(fontConfig as any),
 };
 
 const PaperWrapper: React.FC = ({ children }) => {
-  return <PaperProvider theme={theme}>{children}</PaperProvider>;
+  return <PaperProvider theme={themeWithFonts}>{children}</PaperProvider>;
 };
 
 export default PaperWrapper;

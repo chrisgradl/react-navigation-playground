@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import navigators from "./NavigatorReducer";
 import rootId from "./RootIdReducer";
 import inspector from "./SelectedInspectorReducer";
+import theme from "./ThemeReducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
     navigators,
     rootId,
     inspector,
+    theme,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

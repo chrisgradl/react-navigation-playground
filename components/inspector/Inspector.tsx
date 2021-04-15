@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
-import { TextInput as RNTextInput, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   addScreen,
   deleteNavigator,
   editNavigator,
 } from "../../redux/NavigatorReducer";
-import { Button, Checkbox, TextInput, Title } from "react-native-paper";
+import { Button, Checkbox, Title } from "react-native-paper";
 import { selectRootId, setRootId } from "../../redux/RootIdReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 import {
@@ -17,9 +17,7 @@ import NavigationTypeItem from "./NavigationTypeItem";
 import { nanoid } from "nanoid";
 import TextWithEditFunction from "../TextWithEditFunction";
 
-interface Props {}
-
-const Inspector: React.FC<Props> = () => {
+const Inspector: React.FC = () => {
   const navigator = useAppSelector(selectNavigator);
 
   const rootID = useAppSelector(selectRootId);

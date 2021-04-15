@@ -1,3 +1,5 @@
+import { CombinedDarkTheme, CombinedDefaultTheme } from "./Themes";
+
 export enum PlaygroundNavigatorType {
   Stack = "Stack",
   Tab = "Tab",
@@ -35,4 +37,5 @@ export type NavigatorRecord = Record<string, PlaygroundNavigator>;
 export interface PlaygroundState {
   rootId: string;
   navigators: NavigatorRecord;
+  theme: typeof CombinedDarkTheme | typeof CombinedDefaultTheme;
 }

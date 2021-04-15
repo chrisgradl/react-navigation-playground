@@ -1,13 +1,6 @@
 import React from "react";
 import { Picker, View } from "react-native";
-import {
-  Button,
-  Paragraph,
-  RadioButton,
-  Subheading,
-  TextInput,
-  Title,
-} from "react-native-paper";
+import { Button, RadioButton, Subheading, Title } from "react-native-paper";
 import { useAppSelector } from "../../redux/store";
 import {
   deleteScreen,

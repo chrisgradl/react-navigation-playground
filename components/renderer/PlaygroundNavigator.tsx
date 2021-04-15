@@ -7,6 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import ScreenView from "./ScreenView";
 
 import { PlaygroundNavigatorType } from "../../types";
+import { IconButton } from "react-native-paper";
 
 const createNavigatorByType = (type: PlaygroundNavigatorType) => {
   switch (type) {
@@ -24,9 +25,10 @@ const createNavigatorByType = (type: PlaygroundNavigatorType) => {
 
 interface Props {
   id: string;
+  parentIsDrawer?: boolean;
 }
 
-const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
+const PlaygroundNavigator: React.FC<Props> = ({ id, parentIsDrawer }) => {
   const { navigators } = usePlaygroundState();
 
   const navigator = navigators[id];
@@ -40,7 +42,7 @@ const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
   const Navigation = createNavigatorByType(type);
 
   return (
-    <Navigation.Navigator>
+    <Navigation.Navigator key={id}>
       {Object.values(screens).map((screen) => {
         const { component, name, id: screenId } = screen;
         return (
@@ -48,12 +50,26 @@ const PlaygroundNavigator: React.FC<Props> = ({ id}) => {
             {/*
               // @ts-ignore */}
             <Navigation.Screen
+              options={({ navigation }) => ({
+                headerLeft: (props) =>
+                  parentIsDrawer ? (
+                    <IconButton
+                      icon={"menu"}
+                      onPress={() => navigation?.toggleDrawer()}
+                    />
+                  ) : null,
+              })}
               key={"screenId" + screenId}
               name={name}
             >
               {(props: any) =>
                 component.type === "Navigator" ? (
-                  <PlaygroundNavigator {...props} id={component.navigatorId} />
+                  <PlaygroundNavigator
+                    key={component.navigatorId}
+                    {...props}
+                    id={component.navigatorId}
+                    parentIsDrawer={type === PlaygroundNavigatorType.Drawer}
+                  />
                 ) : (
                   <ScreenView {...props} parentNavigatorId={id} />
                 )

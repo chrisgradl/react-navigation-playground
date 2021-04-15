@@ -7,6 +7,7 @@ import {
 } from "../types";
 
 const initialState: NavigatorRecord = {
+
   "1": {
     id: "1",
     name: "RootNavigator Tab",

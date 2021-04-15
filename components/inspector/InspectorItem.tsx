@@ -1,7 +1,5 @@
 import React from "react";
 import { View, ViewStyle } from "react-native";
-import { RadioButton, Subheading } from "react-native-paper";
-import { PlaygroundNavigatorType } from "../../types";
 
 interface Props {
   style?: ViewStyle;

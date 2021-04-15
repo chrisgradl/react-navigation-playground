@@ -1,4 +1,4 @@
-import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { DrawerActions } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
 import { usePlaygroundState } from "../../hooks/usePlaygroundState";
@@ -6,7 +6,6 @@ import { Button, List } from "react-native-paper";
 import { PlaygroundScreen } from "../../types";
 
 const ScreenView: React.FC<{ parentNavigatorId: string; navigation: any }> = ({
-  parentNavigatorId,
   navigation,
 }) => {
   const { navigators } = usePlaygroundState();
