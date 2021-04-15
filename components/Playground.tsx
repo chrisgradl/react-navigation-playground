@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import Smartphone from "./Smartphone";
 import PlaygroundRenderer from "./renderer/PlaygroundRenderer";
 import { useAppSelector } from "../redux/store";
@@ -17,21 +17,34 @@ const VLine = () => <View style={{ width: 1, backgroundColor: "grey" }} />;
 const InspectorContainer = () => {
   const inspector = useAppSelector((state) => state.inspector);
 
-  if (inspector.type === "Navigator") {
-    return <Inspector />;
-  } else {
-    return <ScreenInspector />;
-  }
+  return (
+    <ScrollView>
+      {inspector.type === "Navigator" ? <Inspector /> : <ScreenInspector />}
+    </ScrollView>
+  );
 };
 
 const Preview = () => {
   const playgroundState = useAppSelector((state) => state);
   return (
-    <Smartphone>
-      <ErrorBoundary>
-        <PlaygroundRenderer playgroundState={playgroundState} />
-      </ErrorBoundary>
-    </Smartphone>
+    <ScrollView
+      contentContainerStyle={{
+        paddingVertical: 32,
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+        }}
+      >
+        <Smartphone>
+          <ErrorBoundary>
+            <PlaygroundRenderer playgroundState={playgroundState} />
+          </ErrorBoundary>
+        </Smartphone>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -41,9 +54,7 @@ const Header = () => (
     <Appbar.Action
       icon="github"
       onPress={() =>
-        Linking.openURL(
-          "https://github.com/chrisgradl/react-navigation-playground"
-        )
+        window.open("https://github.com/chrisgradl/react-navigation-playground")
       }
     />
   </Appbar.Header>
@@ -53,7 +64,7 @@ const Playground: React.FC<Props> = () => {
   return (
     <View style={{ flex: 1 }}>
       <Header />
-      <View style={{ flex: 1, flexDirection: "row", paddingTop: 8 }}>
+      <View style={{ flex: 1, flexDirection: "row" }}>
         <View style={{ flex: 1, padding: 16 }}>
           <NavigatorList />
         </View>
@@ -62,9 +73,7 @@ const Playground: React.FC<Props> = () => {
           <InspectorContainer />
         </View>
         <VLine />
-        <View
-          style={{ flex: 3, justifyContent: "center", alignItems: "center" }}
-        >
+        <View style={{ flex: 3 }}>
           <Preview />
         </View>
       </View>

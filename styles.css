@@ -1,4 +1,21 @@
 :focus {
-    outline-color: transparent;
-    outline-style: none;
+  outline-color: transparent;
+  outline-style: none;
+}
+
+/* These styles make the body full-height */
+html,
+body {
+  height: 100%;
+}
+/* These styles disable body scrolling if you are using <ScrollView> */
+body {
+  overflow: hidden;
+  min-width: 1000px;
+  width: auto !important;
+}
+/* These styles make the root element full-height */
+#root {
+  display: flex;
+  height: 100%;
 }

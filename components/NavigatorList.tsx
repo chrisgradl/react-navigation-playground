@@ -43,7 +43,7 @@ const NavigatorList: React.FC = () => {
   const navigatorArray = Object.values(navigators);
 
   return (
-    <View>
+    <>
       <ScrollView style={{ flex: 1 }}>
         {navigatorArray.map(({ id, name, screens, type }) => (
           <React.Fragment key={id}>
@@ -84,7 +84,7 @@ const NavigatorList: React.FC = () => {
         ))}
       </ScrollView>
       <AddNewNavigator />
-    </View>
+    </>
   );
 };
 
