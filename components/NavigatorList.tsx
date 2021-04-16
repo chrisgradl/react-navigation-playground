@@ -15,20 +15,24 @@ const NavItem: React.FC<{
 }> = ({ onPress, selected, title, onPressDelete }) => (
   <List.Item
     titleStyle={selected && { color: "rgb(0, 122, 255)", fontWeight: "bold" }}
-    style={
-      selected && {
-        borderRadius: 8,
-        backgroundColor: "rgba(0, 122, 255, 0.12)",
-      }
-    }
     title={title}
     onPress={onPress}
-    right={
-      selected
-        ? (props) => (
-            <IconButton style={{padding: 0}} onPress={onPressDelete} icon={"delete"} size={18} />
-          )
-        : null
+    right={(props) =>
+      selected ? (
+        <IconButton
+          style={{ padding: 0 }}
+          onPress={onPressDelete}
+          icon={"delete"}
+          size={18}
+        />
+      ) : (
+        <IconButton
+          color={"transparent"}
+          style={{ padding: 0 }}
+          icon={"delete"}
+          size={18}
+        />
+      )
     }
   />
 );
@@ -55,7 +59,14 @@ const NavigatorList: React.FC = () => {
     <>
       <ScrollView style={{ flex: 1 }}>
         {navigatorArray.map(({ id, name, screens, type }) => (
-          <React.Fragment key={id}>
+          <View
+            key={id}
+            style={{
+              borderRadius: 8,
+              backgroundColor: "rgba(0, 122, 255, 0.12)",
+              marginBottom: 16,
+            }}
+          >
             <NavItem
               onPressDelete={() => dispatch(deleteNavigator(id))}
               selected={
@@ -95,7 +106,7 @@ const NavigatorList: React.FC = () => {
                 />
               ))}
             </View>
-          </React.Fragment>
+          </View>
         ))}
         <AddNewNavigator />
       </ScrollView>

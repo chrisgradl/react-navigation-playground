@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, List } from "react-native-paper";
+import {Button, IconButton, List} from "react-native-paper";
 import { addNavigator } from "../redux/NavigatorReducer";
 import { useAppDispatch } from "../redux/store";
 import { nanoid } from "nanoid";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
+import { View } from "react-native";
 
 // <Button
 //     icon={"plus"}
@@ -15,24 +16,27 @@ import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
 const AddNewNavigator: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
-    <List.Item
-      style={{ paddingLeft: 0, marginLeft: 0 }}
-      left={(props) => (
-        <List.Icon icon={"plus-circle"} color={"rgb(0, 122, 255)"} />
-      )}
-      title={"Add Navigator"}
-      onPress={() => {
-        const id = nanoid();
-        dispatch(addNavigator(id));
-        dispatch(
-          setSelectedInspector({
-            type: "Navigator",
-            screenId: undefined,
-            navigatorId: id,
-          })
-        );
-      }}
-    />
+    <View
+      style={{ borderRadius: 8, borderColor: "rgba(0, 122, 255, 0.12)", borderWidth: 2 }}
+    >
+      <List.Item
+        left={(props) => (
+          <IconButton icon={"plus-circle"} color={"rgb(0, 122, 255)"} size={18} />
+        )}
+        title={"Add Navigator"}
+        onPress={() => {
+          const id = nanoid();
+          dispatch(addNavigator(id));
+          dispatch(
+            setSelectedInspector({
+              type: "Navigator",
+              screenId: undefined,
+              navigatorId: id,
+            })
+          );
+        }}
+      />
+    </View>
   );
 };
 

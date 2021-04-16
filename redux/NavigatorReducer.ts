@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  ComponentType, NavigatorRecord,
+  ComponentType,
+  NavigatorRecord,
   PlaygroundNavigator,
   PlaygroundNavigatorType,
   PlaygroundScreen,
 } from "../types";
+import { customAlphabet, nanoid } from "nanoid";
+
+const createNameId = customAlphabet("0123456789", 4);
 
 const initialState: NavigatorRecord = {
-
   "1": {
     id: "1",
     name: "RootNavigator Tab",
@@ -69,8 +72,9 @@ const slice = createSlice({
   reducers: {
     addNavigator: (state, action: PayloadAction<string>) => {
       const id = action.payload;
+      const name = "Navigator-" + createNameId();
       state[id] = {
-        name: id,
+        name,
         type: PlaygroundNavigatorType.Stack,
         id,
         screens: {},
@@ -94,13 +98,14 @@ const slice = createSlice({
       state,
       action: PayloadAction<{ navigatorId: string; screenId: string }>
     ) => {
-      const {navigatorId, screenId} = action.payload;
+      const { navigatorId, screenId } = action.payload;
+      const name = "Screen-" + createNameId();
       state[navigatorId].screens[screenId] = {
         component: {
           type: ComponentType.View,
           navigatorId: undefined,
         },
-        name: "screen" + screenId,
+        name,
         id: screenId,
       };
     },

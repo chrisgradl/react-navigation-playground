@@ -7,7 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import ScreenView from "./ScreenView";
 
 import { PlaygroundNavigatorType } from "../../types";
-import { IconButton } from "react-native-paper";
+import {IconButton, Subheading} from "react-native-paper";
 
 const createNavigatorByType = (type: PlaygroundNavigatorType) => {
   switch (type) {
@@ -34,7 +34,7 @@ const PlaygroundNavigator: React.FC<Props> = ({ id, parentIsDrawer }) => {
   const navigator = navigators[id];
 
   if (!navigator) {
-    return <Text>Could not find navigator with id {id}</Text>;
+    return <Subheading>Could not find a navigator</Subheading>;
   }
 
   const { type, screens } = navigator;
