@@ -11,6 +11,8 @@ import ErrorBoundary from "./ErrorBoundary";
 import PreviewSwitch from "./PreviewSwitch";
 import { selectPreviewPanel } from "../redux/PreviewReducer";
 import CodePanel from "./CodePanel";
+import ExportToSnack from "./ExportToSnack";
+import { AppbarContent } from "react-native-paper/lib/typescript/components/Appbar/AppbarContent";
 
 interface Props {}
 
@@ -61,7 +63,7 @@ const Preview = () => {
 const Header = () => (
   <Appbar.Header>
     <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
-    <PreviewSwitch />
+    <ExportToSnack />
     <Appbar.Action
       icon="github"
       onPress={() =>
@@ -86,6 +88,16 @@ const Playground: React.FC<Props> = () => {
         <VLine />
         <View style={{ flex: 3 }}>
           <PreviewContainer />
+          <View
+            style={{
+              height: 38,
+              backgroundColor: "lightgrey",
+              justifyContent: "center",
+              alignItems: "flex-end",
+            }}
+          >
+            <PreviewSwitch />
+          </View>
         </View>
       </View>
     </View>
