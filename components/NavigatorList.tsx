@@ -1,16 +1,18 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { List } from "react-native-paper";
+import { IconButton, List } from "react-native-paper";
 import AddNewNavigator from "./AddNewNavigator";
 import { ComponentType, PlaygroundScreen } from "../types";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
+import { deleteNavigator, deleteScreen } from "../redux/NavigatorReducer";
 
 const NavItem: React.FC<{
   selected: boolean;
   title: string;
   onPress(): void;
-}> = ({ onPress, selected, title }) => (
+  onPressDelete?(): void;
+}> = ({ onPress, selected, title, onPressDelete }) => (
   <List.Item
     titleStyle={selected && { color: "rgb(0, 122, 255)", fontWeight: "bold" }}
     style={
@@ -21,6 +23,13 @@ const NavItem: React.FC<{
     }
     title={title}
     onPress={onPress}
+    right={
+      selected
+        ? (props) => (
+            <IconButton style={{padding: 0}} onPress={onPressDelete} icon={"delete"} size={18} />
+          )
+        : null
+    }
   />
 );
 
@@ -48,6 +57,7 @@ const NavigatorList: React.FC = () => {
         {navigatorArray.map(({ id, name, screens, type }) => (
           <React.Fragment key={id}>
             <NavItem
+              onPressDelete={() => dispatch(deleteNavigator(id))}
               selected={
                 inspector.type === "Navigator" && id === inspector.navigatorId
               }
@@ -75,6 +85,11 @@ const NavigatorList: React.FC = () => {
                       })
                     )
                   }
+                  onPressDelete={() =>
+                    dispatch(
+                      deleteScreen({ navigatorId: id, screenId: screen.id })
+                    )
+                  }
                   key={screen.id}
                   title={getTitleFromScreen(screen, navigators)}
                 />
@@ -82,8 +97,8 @@ const NavigatorList: React.FC = () => {
             </View>
           </React.Fragment>
         ))}
+        <AddNewNavigator />
       </ScrollView>
-      <AddNewNavigator />
     </>
   );
 };

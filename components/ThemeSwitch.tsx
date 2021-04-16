@@ -8,16 +8,20 @@ const ThemeSwitch: React.FC = () => {
   const dispatch = useAppDispatch();
   const theme = useAppSelector(selectTheme);
 
+  const color = theme.dark ? "rgb(18, 18, 18)" : "white";
+
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <IconButton color={"white"} icon={"brightness-7"} />
       <Switch
         value={theme.dark}
         onValueChange={(value) =>
           dispatch(setTheme(value ? "dark" : "default"))
         }
       ></Switch>
-      <IconButton icon={"brightness-2"} />
+      <IconButton
+        color={color}
+        icon={theme.dark ? "brightness-2" : "brightness-7"}
+      />
     </View>
   );
 };

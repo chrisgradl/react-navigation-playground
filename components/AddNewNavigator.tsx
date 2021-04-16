@@ -1,17 +1,26 @@
 import React from "react";
-import { Button } from "react-native-paper";
+import { Button, List } from "react-native-paper";
 import { addNavigator } from "../redux/NavigatorReducer";
 import { useAppDispatch } from "../redux/store";
 import { nanoid } from "nanoid";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
 
-interface Props {}
+// <Button
+//     icon={"plus"}
 
-const AddNewNavigator: React.FC<Props> = () => {
+// >
+//     Add Navigator
+// </Button>
+
+const AddNewNavigator: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
-    <Button
-      icon={"plus"}
+    <List.Item
+      style={{ paddingLeft: 0, marginLeft: 0 }}
+      left={(props) => (
+        <List.Icon icon={"plus-circle"} color={"rgb(0, 122, 255)"} />
+      )}
+      title={"Add Navigator"}
       onPress={() => {
         const id = nanoid();
         dispatch(addNavigator(id));
@@ -23,9 +32,7 @@ const AddNewNavigator: React.FC<Props> = () => {
           })
         );
       }}
-    >
-      Add Navigator
-    </Button>
+    />
   );
 };
 

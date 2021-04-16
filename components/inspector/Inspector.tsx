@@ -72,14 +72,6 @@ const Inspector: React.FC = () => {
       </Button>
       <InspectorItemSpace />
       <InspectorItemSpace />
-      <Button
-        mode={"contained"}
-        onPress={() => dispatch(deleteNavigator(id))}
-        icon={"trash-can-outline"}
-        color={"red"}
-      >
-        Delete Navigator
-      </Button>
     </View>
   );
 };

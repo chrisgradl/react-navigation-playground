@@ -82,16 +82,6 @@ const ScreenInspector: React.FC = () => {
         )}
       </InspectorItem>
       <InspectorItemSpace />
-      <Button
-        onPress={() =>
-          dispatch(deleteScreen({ navigatorId, screenId: screen.id }))
-        }
-        mode={"contained"}
-        icon={"trash-can-outline"}
-        color={"red"}
-      >
-        Delete Screen
-      </Button>
     </View>
   );
 };
