@@ -51,9 +51,6 @@ const Preview = () => {
 const Header = () => (
   <Appbar.Header>
     <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
-
-    <ThemeSwitch />
-
     <Appbar.Action
       icon="github"
       onPress={() =>

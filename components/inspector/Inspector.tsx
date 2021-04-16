@@ -16,6 +16,7 @@ import {
 import NavigationTypeItem from "./NavigationTypeItem";
 import { nanoid } from "nanoid";
 import TextWithEditFunction from "../TextWithEditFunction";
+import ThemeSwitch from "../ThemeSwitch";
 
 const Inspector: React.FC = () => {
   const navigator = useAppSelector(selectNavigator);
@@ -51,6 +52,12 @@ const Inspector: React.FC = () => {
           status={isRootNav ? "checked" : "unchecked"}
         />
       </InspectorItem>
+      <InspectorItemSpace />
+      {isRootNav && (
+        <InspectorItem>
+          <ThemeSwitch />
+        </InspectorItem>
+      )}
       <InspectorItemSpace />
       <NavigationTypeItem
         onChange={(type) => dispatch(editNavigator({ id, data: { type } }))}
