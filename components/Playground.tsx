@@ -8,7 +8,9 @@ import NavigatorList from "./NavigatorList";
 import Inspector from "./inspector/Inspector";
 import ScreenInspector from "./inspector/ScreenInspector";
 import ErrorBoundary from "./ErrorBoundary";
-import ThemeSwitch from "./ThemeSwitch";
+import PreviewSwitch from "./PreviewSwitch";
+import { selectPreviewPanel } from "../redux/PreviewReducer";
+import CodePanel from "./CodePanel";
 
 interface Props {}
 
@@ -24,33 +26,42 @@ const InspectorContainer = () => {
   );
 };
 
-const Preview = () => {
-  const playgroundState = useAppSelector((state) => state);
+const PreviewContainer = () => {
+  const preview = useAppSelector(selectPreviewPanel);
+
   return (
     <ScrollView
       contentContainerStyle={{
         paddingVertical: 32,
       }}
     >
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-        }}
-      >
-        <Smartphone>
-          <ErrorBoundary>
-            <PlaygroundRenderer playgroundState={playgroundState} />
-          </ErrorBoundary>
-        </Smartphone>
-      </View>
+      {preview === "Code" ? <CodePanel /> : <Preview />}
     </ScrollView>
+  );
+};
+
+const Preview = () => {
+  const playgroundState = useAppSelector((state) => state);
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+      }}
+    >
+      <Smartphone>
+        <ErrorBoundary>
+          <PlaygroundRenderer playgroundState={playgroundState} />
+        </ErrorBoundary>
+      </Smartphone>
+    </View>
   );
 };
 
 const Header = () => (
   <Appbar.Header>
     <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
+    <PreviewSwitch />
     <Appbar.Action
       icon="github"
       onPress={() =>
@@ -74,7 +85,7 @@ const Playground: React.FC<Props> = () => {
         </View>
         <VLine />
         <View style={{ flex: 3 }}>
-          <Preview />
+          <PreviewContainer />
         </View>
       </View>
     </View>

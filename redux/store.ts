@@ -3,6 +3,7 @@ import navigators from "./NavigatorReducer";
 import rootId from "./RootIdReducer";
 import inspector from "./SelectedInspectorReducer";
 import theme from "./ThemeReducer";
+import preview from "./PreviewReducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   rootId,
   inspector,
   theme,
+  preview,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

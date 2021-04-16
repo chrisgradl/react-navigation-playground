@@ -1,6 +1,5 @@
 import React from "react";
 import { PlaygroundState } from "../../types";
-import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { PlaygroundProvider } from "../../hooks/usePlaygroundState";
@@ -21,7 +20,6 @@ const PlaygroundRenderer: React.FC<Props> = ({ playgroundState }) => {
           <NavigationContainer theme={theme}>
             <PlaygroundNavigator id={rootId} />
           </NavigationContainer>
-          <StatusBar />
         </PaperProvider>
       </SafeAreaProvider>
     </PlaygroundProvider>
