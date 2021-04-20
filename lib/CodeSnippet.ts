@@ -1,4 +1,5 @@
 import {
+  HeaderIcon,
   NavigatorRecord,
   PlaygroundNavigator,
   PlaygroundNavigatorType,
@@ -22,6 +23,7 @@ function createImports(state: PlaygroundState) {
 
   return `import React from "react";
   import {View, Text} from "react-native";
+  import {IconButton} from "react-native-paper";
   import { NavigationContainer } from "@react-navigation/native";
   import { SafeAreaProvider } from "react-native-safe-area-context";
   ${types.map((type) => importLinesForNavigatos[type]).join("\n")}
@@ -63,7 +65,7 @@ const createNavigator = (
   const navigatorName = getNavigatorName(name);
   const componentName = navigatorName + "Component";
 
-  const getScreenComponent = ({ component, name, id }: PlaygroundScreen) => {
+  const getScreenComponent = ({ component }: PlaygroundScreen) => {
     if (component.type === "View") {
       return "SimplePage";
     } else {
@@ -71,9 +73,47 @@ const createNavigator = (
       if (!navigator) {
         return "SimplePage";
       }
-      const compName =
-        getNavigatorName(navigators[component.navigatorId].name) + "Component";
-      return compName;
+      return getNavigatorName(navigators[component.navigatorId].name) + "Component";
+    }
+  };
+
+  const createHeaderIconComponent = ({
+    icon,
+    payload,
+    action,
+  }: HeaderIcon) => `() =>  <IconButton
+                      icon={"${icon}"}
+                      onPress={() => {
+                          ${
+                            action === "toggleDrawer"
+                              ? "navigation.toggleDrawer();"
+                              : `navigation.navigate(${payload});`
+                          }
+                        
+                      }}
+                    />`;
+
+  const getScreenOptions = ({
+    headerShown,
+    headerLeft,
+    headerRight,
+  }: PlaygroundScreen) => {
+    if (type === PlaygroundNavigatorType.Stack) {
+      return `options={({navigation}) => ({
+        headerShown: ${Boolean(headerShown)}, 
+        ${
+          headerRight
+            ? "headerLeft:" + createHeaderIconComponent(headerLeft) + ","
+            : ""
+        }
+        ${
+          headerRight
+            ? "headerRight:" + createHeaderIconComponent(headerRight) + ","
+            : ""
+        }
+      })}`;
+    } else {
+      return "";
     }
   };
 
@@ -88,7 +128,9 @@ const createNavigator = (
                     (screen) =>
                       `<${navigatorName}.Screen name="${
                         screen.name
-                      }" component={${getScreenComponent(screen)}}/>`
+                      }" component={${getScreenComponent(screen)}} 
+                      ${getScreenOptions(screen)}  
+/>`
                   )
                   .join("\n")}
             </${navigatorName}.Navigator>
@@ -112,7 +154,7 @@ export const formatCode = async (code: string) => {
 };
 
 export default async function createCodeSnippet(state: PlaygroundState) {
-  const { navigators, theme, rootId } = state;
+  const { navigators, rootId } = state;
 
   const rootNavigatorComponentName =
     getNavigatorName(navigators[rootId].name) + "Component";

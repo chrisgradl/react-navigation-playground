@@ -1,22 +1,15 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import Smartphone from "./Smartphone";
-import PlaygroundRenderer from "./renderer/PlaygroundRenderer";
 import { useAppSelector } from "../redux/store";
-import { Appbar } from "react-native-paper";
 import NavigatorList from "./NavigatorList";
 import Inspector from "./inspector/Inspector";
 import ScreenInspector from "./inspector/ScreenInspector";
-import ErrorBoundary from "./ErrorBoundary";
 import PreviewSwitch from "./PreviewSwitch";
 import { selectPreviewPanel } from "../redux/PreviewReducer";
 import CodePanel from "./CodePanel";
-import ExportToSnack from "./ExportToSnack";
-import { AppbarContent } from "react-native-paper/lib/typescript/components/Appbar/AppbarContent";
-
-interface Props {}
-
-const VLine = () => <View style={{ width: 1, backgroundColor: "grey" }} />;
+import Header from "./Header";
+import LivePreview from "./LivePreview";
+import VLine from "./VLine";
 
 const InspectorContainer = () => {
   const inspector = useAppSelector((state) => state.inspector);
@@ -37,43 +30,12 @@ const PreviewContainer = () => {
         paddingVertical: 32,
       }}
     >
-      {preview === "Code" ? <CodePanel /> : <Preview />}
+      {preview === "Code" ? <CodePanel /> : <LivePreview />}
     </ScrollView>
   );
 };
 
-const Preview = () => {
-  const playgroundState = useAppSelector((state) => state);
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-      }}
-    >
-      <Smartphone>
-        <ErrorBoundary>
-          <PlaygroundRenderer playgroundState={playgroundState} />
-        </ErrorBoundary>
-      </Smartphone>
-    </View>
-  );
-};
-
-const Header = () => (
-  <Appbar.Header>
-    <Appbar.Content title="React-Navigation Playground"></Appbar.Content>
-    <ExportToSnack />
-    <Appbar.Action
-      icon="github"
-      onPress={() =>
-        window.open("https://github.com/chrisgradl/react-navigation-playground")
-      }
-    />
-  </Appbar.Header>
-);
-
-const Playground: React.FC<Props> = () => {
+export default function Playground() {
   return (
     <View style={{ flex: 1 }}>
       <Header />
@@ -102,6 +64,4 @@ const Playground: React.FC<Props> = () => {
       </View>
     </View>
   );
-};
-
-export default Playground;
+}

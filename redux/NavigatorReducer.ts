@@ -6,7 +6,7 @@ import {
   PlaygroundNavigatorType,
   PlaygroundScreen,
 } from "../types";
-import { customAlphabet, nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 
 const createNameId = customAlphabet("0123456789", 4);
 
@@ -72,7 +72,7 @@ const slice = createSlice({
   reducers: {
     addNavigator: (state, action: PayloadAction<string>) => {
       const id = action.payload;
-      const name = "Navigator-" + createNameId();
+      const name = "Navigator" + createNameId();
       state[id] = {
         name,
         type: PlaygroundNavigatorType.Stack,
@@ -99,7 +99,7 @@ const slice = createSlice({
       action: PayloadAction<{ navigatorId: string; screenId: string }>
     ) => {
       const { navigatorId, screenId } = action.payload;
-      const name = "Screen-" + createNameId();
+      const name = "Screen" + createNameId();
       state[navigatorId].screens[screenId] = {
         component: {
           type: ComponentType.View,
@@ -107,6 +107,7 @@ const slice = createSlice({
         },
         name,
         id: screenId,
+        headerShown: true,
       };
     },
     deleteScreen: (

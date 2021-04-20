@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppSelector } from "../redux/store";
 import createCodeSnippet from "../lib/CodeSnippet";
 import { Button } from "react-native-paper";
@@ -15,6 +15,8 @@ const dependencies = [
   "@react-navigation/bottom-tabs",
   "react-native-safe-area-context",
   "@react-native-community/masked-view",
+  "react-native-paper",
+  "@expo/vector-icons"
 ];
 
 const ExportToSnack: React.FC<Props> = () => {

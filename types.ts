@@ -19,6 +19,12 @@ export enum ComponentType {
   Navigator = "Navigator",
 }
 
+export interface HeaderIcon {
+  icon: string;
+  action: "toggleDrawer" | "navigate";
+  payload?: any;
+}
+
 export interface PlaygroundScreen {
   id: string;
   name: string;
@@ -26,6 +32,9 @@ export interface PlaygroundScreen {
     type: ComponentType;
     navigatorId: string;
   };
+  headerRight?: HeaderIcon;
+  headerLeft?: HeaderIcon;
+  headerShown?: boolean;
   /*screenOptions?:
     | StackNavigationOptions
     | BottomTabNavigationOptions

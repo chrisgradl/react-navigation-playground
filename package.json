@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
-    "build": "GENERATE_SOURCEMAP=false expo build:web --no-pwa"
+    "build": "GENERATE_SOURCEMAP=false expo build:web --no-pwa && cp -R .vercel web-build && cd web-build && vercel --prod && cd .."
   },
   "jest": {
     "preset": "jest-expo"

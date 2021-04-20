@@ -1,24 +1,24 @@
 import React from "react";
 import { Picker, View } from "react-native";
-import { Button, RadioButton, Subheading, Title } from "react-native-paper";
+import { Checkbox, RadioButton, Subheading, Title } from "react-native-paper";
 import { useAppSelector } from "../../redux/store";
-import {
-  deleteScreen,
-  editScreen as editScreenAction,
-} from "../../redux/NavigatorReducer";
+import { editScreen as editScreenAction } from "../../redux/NavigatorReducer";
 import { useDispatch } from "react-redux";
-import { ComponentType } from "../../types";
+import { ComponentType, PlaygroundNavigatorType } from "../../types";
 import { selectScreen } from "../../redux/SelectedInspectorReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 import TextWithEditFunction from "../TextWithEditFunction";
+import IconPicker from "../IconPicker";
 
 const ScreenInspector: React.FC = () => {
   const screen = useAppSelector(selectScreen);
   const { navigatorId } = useAppSelector((state) => state.inspector);
+
   const navigators = useAppSelector((state) => state.navigators);
   const navigatorList = Object.values(navigators).filter(
     (nav) => nav.id !== navigatorId
   );
+  const navigator = navigators[navigatorId];
   const dispatch = useDispatch();
 
   if (!screen) {
@@ -81,6 +81,43 @@ const ScreenInspector: React.FC = () => {
           </View>
         )}
       </InspectorItem>
+      <InspectorItemSpace />
+
+      {navigator.type === PlaygroundNavigatorType.Stack ? (
+        <>
+          <IconPicker
+            label={"Header Left"}
+            value={screen?.headerLeft}
+            onValueChange={(value) =>
+              editScreen({
+                headerLeft: value,
+              })
+            }
+          />
+          <InspectorItemSpace />
+          <IconPicker
+            label={"Header Right"}
+            value={screen?.headerRight}
+            onValueChange={(value) =>
+              editScreen({
+                headerRight: value,
+              })
+            }
+          />
+          <InspectorItemSpace />
+          <InspectorItem>
+            <Checkbox.Item
+              onPress={() =>
+                editScreen({
+                  headerShown: !screen.headerShown,
+                })
+              }
+              label="Header Shown"
+              status={screen.headerShown ? "checked" : "unchecked"}
+            />
+          </InspectorItem>
+        </>
+      ) : null}
       <InspectorItemSpace />
     </View>
   );

@@ -1,34 +1,31 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from "@react-navigation/stack";
 import { usePlaygroundState } from "../../hooks/usePlaygroundState";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ScreenView from "./ScreenView";
-
 import { PlaygroundNavigatorType } from "../../types";
-import {IconButton, Subheading} from "react-native-paper";
+import { IconButton, Subheading } from "react-native-paper";
 
 const createNavigatorByType = (type: PlaygroundNavigatorType) => {
   switch (type) {
     case PlaygroundNavigatorType.Stack:
       return createStackNavigator();
-      break;
     case PlaygroundNavigatorType.Tab:
       return createBottomTabNavigator();
-      break;
     case PlaygroundNavigatorType.Drawer:
       return createDrawerNavigator();
-      break;
   }
 };
 
 interface Props {
-  id: string;
-  parentIsDrawer?: boolean;
+  id: string
 }
 
-const PlaygroundNavigator: React.FC<Props> = ({ id, parentIsDrawer }) => {
+const PlaygroundNavigator: React.FC<Props> = ({ id }) => {
   const { navigators } = usePlaygroundState();
 
   const navigator = navigators[id];
@@ -50,15 +47,42 @@ const PlaygroundNavigator: React.FC<Props> = ({ id, parentIsDrawer }) => {
             {/*
               // @ts-ignore */}
             <Navigation.Screen
-              options={({ navigation }) => ({
-                headerLeft: (props) =>
-                  parentIsDrawer ? (
+              options={({ navigation }) => {
+                const options: StackNavigationOptions = {
+                  headerShown: screen.headerShown,
+                };
+                if (screen.headerRight) {
+                  options.headerRight = () => (
                     <IconButton
-                      icon={"menu"}
-                      onPress={() => navigation?.toggleDrawer()}
+                      icon={screen.headerRight.icon}
+                      onPress={() => {
+                        const { payload, action } = screen.headerRight;
+                        if (action === "toggleDrawer") {
+                          navigation.toggleDrawer();
+                        } else if (payload) {
+                          navigation.navigate(payload);
+                        }
+                      }}
                     />
-                  ) : null,
-              })}
+                  );
+                }
+                if (screen.headerLeft) {
+                  options.headerLeft = () => (
+                    <IconButton
+                      icon={screen.headerLeft.icon}
+                      onPress={() => {
+                        const { payload, action } = screen.headerLeft;
+                        if (action === "toggleDrawer") {
+                          navigation.toggleDrawer();
+                        } else if (payload) {
+                          navigation.navigate(payload);
+                        }
+                      }}
+                    />
+                  );
+                }
+                return options;
+              }}
               key={"screenId" + screenId}
               name={name}
             >
@@ -68,7 +92,6 @@ const PlaygroundNavigator: React.FC<Props> = ({ id, parentIsDrawer }) => {
                     key={component.navigatorId}
                     {...props}
                     id={component.navigatorId}
-                    parentIsDrawer={type === PlaygroundNavigatorType.Drawer}
                   />
                 ) : (
                   <ScreenView {...props} parentNavigatorId={id} />
@@ -79,12 +102,6 @@ const PlaygroundNavigator: React.FC<Props> = ({ id, parentIsDrawer }) => {
         );
       })}
     </Navigation.Navigator>
-  );
-
-  return (
-    <View>
-      <Text>Navigator Type not allowed</Text>
-    </View>
   );
 };
 
