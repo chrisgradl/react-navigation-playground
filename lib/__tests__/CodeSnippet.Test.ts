@@ -1,4 +1,5 @@
 import createCodeSnippet from "../CodeSnippet";
+import { TemplateTabs } from "../../Templates";
 
 const state = {
   navigators: {
@@ -142,6 +143,12 @@ const state = {
 
 it("should convert State to CodeSnippet", async () => {
   const code = await createCodeSnippet(state as any);
+  console.log(code);
+  expect(code).toBeDefined();
+});
+
+it("should convert Tab State to CodeSnippet", async () => {
+  const code = await createCodeSnippet(TemplateTabs as any);
   console.log(code);
   expect(code).toBeDefined();
 });

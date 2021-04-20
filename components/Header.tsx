@@ -1,11 +1,15 @@
 import React, { useRef, useState } from "react";
 import { Appbar, Menu } from "react-native-paper";
 import ExportToSnack from "./ExportToSnack";
+import { useAppDispatch } from "../redux/store";
+import {loadDrawerTemplate, loadTabsTemplate, resetState} from "../redux/LoadProjectAction";
 
 const Header = () => {
   const anchorRef = useRef();
 
   const [menu, showMenu] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   return (
     <Appbar.Header>
@@ -21,10 +25,27 @@ const Header = () => {
         onDismiss={() => showMenu(false)}
         visible={menu}
       >
-        <Menu.Item title={"Template: Tabs"} />
-        <Menu.Item title={"Template: Stack"} />
-        <Menu.Item title={"Template: complex"} />
-        <Menu.Item title={"Reset"} />
+        <Menu.Item
+          title={"Template: Tabs"}
+          onPress={() => {
+            dispatch(loadTabsTemplate());
+            showMenu(false);
+          }}
+        />
+        <Menu.Item
+          title={"Template: Stack"}
+          onPress={() => {
+            dispatch(loadDrawerTemplate());
+            showMenu(false);
+          }}
+        />
+        <Menu.Item
+          title={"Reset"}
+          onPress={() => {
+            dispatch(resetState());
+            showMenu(false);
+          }}
+        />
       </Menu>
 
       <Appbar.Content title="React-Navigation Playground" />

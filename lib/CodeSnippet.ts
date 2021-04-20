@@ -43,8 +43,7 @@ function createRootNavigation(children: string) {
 }
 
 const getNavigatorName = (name: string) => {
-  const real = "N" + name + "".replaceAll(" ", "_");
-  return real.replaceAll("-", "_");
+  return name;
 };
 
 const createNavigatorConst = (name, type) => {
@@ -73,7 +72,9 @@ const createNavigator = (
       if (!navigator) {
         return "SimplePage";
       }
-      return getNavigatorName(navigators[component.navigatorId].name) + "Component";
+      return (
+        getNavigatorName(navigators[component.navigatorId].name) + "Component"
+      );
     }
   };
 
@@ -87,7 +88,7 @@ const createNavigator = (
                           ${
                             action === "toggleDrawer"
                               ? "navigation.toggleDrawer();"
-                              : `navigation.navigate(${payload});`
+                              : `navigation.navigate("${payload}");`
                           }
                         
                       }}
@@ -102,7 +103,7 @@ const createNavigator = (
       return `options={({navigation}) => ({
         headerShown: ${Boolean(headerShown)}, 
         ${
-          headerRight
+          headerLeft
             ? "headerLeft:" + createHeaderIconComponent(headerLeft) + ","
             : ""
         }

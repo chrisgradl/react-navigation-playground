@@ -8,22 +8,27 @@ import theme from "prism-react-renderer/themes/vsLight";
 const CodePanel: React.FC = () => {
   const components = useAppSelector((state) => state);
   const [code, setCode] = useState<string | undefined>(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const getCode = async () => {
-      const code = await createCodeSnippet(components);
-      setCode(code);
+      try {
+        const code = await createCodeSnippet(components);
+        setCode(code);
+      } catch (e) {
+        setError("Failed to generate Codesnippet: "+ e.message + "\n " + e.stack);
+      }
     };
 
     getCode();
   }, [components]);
 
   return (
-    <View style={{paddingHorizontal: 16 }}>
+    <View style={{ paddingHorizontal: 16 }}>
       <Highlight
         {...defaultProps}
         theme={theme}
-        code={code || "// Formatting code… please wait ✨"}
+        code={code || error || "// Formatting code… please wait ✨"}
         language="jsx"
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (

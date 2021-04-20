@@ -1,25 +1,13 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import navigators from "./NavigatorReducer";
-import rootId from "./RootIdReducer";
-import inspector from "./SelectedInspectorReducer";
-import theme from "./ThemeReducer";
-import preview from "./PreviewReducer";
+import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import rootReducer from "./RootReducer";
 
 const persistConfig = {
   key: "root",
   storage,
 };
-
-const rootReducer = combineReducers({
-  navigators,
-  rootId,
-  inspector,
-  theme,
-  preview,
-});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

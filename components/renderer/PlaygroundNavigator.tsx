@@ -22,7 +22,7 @@ const createNavigatorByType = (type: PlaygroundNavigatorType) => {
 };
 
 interface Props {
-  id: string
+  id: string;
 }
 
 const PlaygroundNavigator: React.FC<Props> = ({ id }) => {
@@ -48,40 +48,42 @@ const PlaygroundNavigator: React.FC<Props> = ({ id }) => {
               // @ts-ignore */}
             <Navigation.Screen
               options={({ navigation }) => {
-                const options: StackNavigationOptions = {
-                  headerShown: screen.headerShown,
-                };
-                if (screen.headerRight) {
-                  options.headerRight = () => (
-                    <IconButton
-                      icon={screen.headerRight.icon}
-                      onPress={() => {
-                        const { payload, action } = screen.headerRight;
-                        if (action === "toggleDrawer") {
-                          navigation.toggleDrawer();
-                        } else if (payload) {
-                          navigation.navigate(payload);
-                        }
-                      }}
-                    />
-                  );
+                if (type === PlaygroundNavigatorType.Stack) {
+                  const options: StackNavigationOptions = {
+                    headerShown: screen.headerShown,
+                  };
+                  if (screen.headerRight) {
+                    options.headerRight = () => (
+                      <IconButton
+                        icon={screen.headerRight.icon}
+                        onPress={() => {
+                          const { payload, action } = screen.headerRight;
+                          if (action === "toggleDrawer") {
+                            navigation.toggleDrawer();
+                          } else if (payload) {
+                            navigation.navigate(payload);
+                          }
+                        }}
+                      />
+                    );
+                  }
+                  if (screen.headerLeft) {
+                    options.headerLeft = () => (
+                      <IconButton
+                        icon={screen.headerLeft.icon}
+                        onPress={() => {
+                          const { payload, action } = screen.headerLeft;
+                          if (action === "toggleDrawer") {
+                            navigation.toggleDrawer();
+                          } else if (payload) {
+                            navigation.navigate(payload);
+                          }
+                        }}
+                      />
+                    );
+                  }
+                  return options;
                 }
-                if (screen.headerLeft) {
-                  options.headerLeft = () => (
-                    <IconButton
-                      icon={screen.headerLeft.icon}
-                      onPress={() => {
-                        const { payload, action } = screen.headerLeft;
-                        if (action === "toggleDrawer") {
-                          navigation.toggleDrawer();
-                        } else if (payload) {
-                          navigation.navigate(payload);
-                        }
-                      }}
-                    />
-                  );
-                }
-                return options;
               }}
               key={"screenId" + screenId}
               name={name}
