@@ -1,6 +1,6 @@
 import React from "react";
 import { Picker, View } from "react-native";
-import { Checkbox, RadioButton, Subheading, Title } from "react-native-paper";
+import { RadioButton, Subheading, Title } from "react-native-paper";
 import { useAppSelector } from "../../redux/store";
 import { editScreen as editScreenAction } from "../../redux/NavigatorReducer";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ import { ComponentType, PlaygroundNavigatorType } from "../../types";
 import { selectScreen } from "../../redux/SelectedInspectorReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 import TextWithEditFunction from "../TextWithEditFunction";
-import IconPicker from "../IconPicker";
+import StackScreenOptionsInspector from "./StackScreenOptionsInspector";
 
 const ScreenInspector: React.FC = () => {
   const screen = useAppSelector(selectScreen);
@@ -82,41 +82,8 @@ const ScreenInspector: React.FC = () => {
         )}
       </InspectorItem>
       <InspectorItemSpace />
-
       {navigator.type === PlaygroundNavigatorType.Stack ? (
-        <>
-          <IconPicker
-            label={"Header Left"}
-            value={screen?.headerLeft}
-            onValueChange={(value) =>
-              editScreen({
-                headerLeft: value,
-              })
-            }
-          />
-          <InspectorItemSpace />
-          <IconPicker
-            label={"Header Right"}
-            value={screen?.headerRight}
-            onValueChange={(value) =>
-              editScreen({
-                headerRight: value,
-              })
-            }
-          />
-          <InspectorItemSpace />
-          <InspectorItem>
-            <Checkbox.Item
-              onPress={() =>
-                editScreen({
-                  headerShown: !screen.headerShown,
-                })
-              }
-              label="Header Shown"
-              status={screen.headerShown ? "checked" : "unchecked"}
-            />
-          </InspectorItem>
-        </>
+        <StackScreenOptionsInspector screen={screen} editScreen={editScreen} />
       ) : null}
       <InspectorItemSpace />
     </View>

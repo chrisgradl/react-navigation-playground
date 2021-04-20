@@ -10,65 +10,10 @@ import { customAlphabet } from "nanoid";
 
 const createNameId = customAlphabet("0123456789", 4);
 
-const initialState: NavigatorRecord = {
-  "1": {
-    id: "1",
-    name: "RootNavigator Tab",
-    screens: {
-      screen1: {
-        component: {
-          type: ComponentType.Navigator,
-          navigatorId: "2",
-        },
-        name: "screen1",
-        id: "screen1",
-      },
-      screen2: {
-        component: {
-          type: ComponentType.Navigator,
-          navigatorId: "3",
-        },
-        name: "screen2",
-        id: "screen2",
-      },
-    },
-    type: PlaygroundNavigatorType.Tab,
-  },
-  "2": {
-    name: "Stack 1 in Tab",
-    id: "2",
-    type: PlaygroundNavigatorType.Stack,
-    screens: {
-      "4": {
-        component: {
-          type: ComponentType.View,
-          navigatorId: undefined,
-        },
-        name: "screen4",
-        id: "4",
-      },
-    },
-  },
-  "3": {
-    name: "Stack 2 in Tab",
-    id: "3",
-    type: PlaygroundNavigatorType.Stack,
-    screens: {
-      "5": {
-        component: {
-          type: ComponentType.View,
-          navigatorId: undefined,
-        },
-        name: "screen5",
-        id: "5",
-      },
-    },
-  },
-};
 
 const slice = createSlice({
   name: "NavigatorReducer",
-  initialState,
+  initialState: {} as NavigatorRecord,
   reducers: {
     addNavigator: (state, action: PayloadAction<string>) => {
       const id = action.payload;

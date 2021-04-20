@@ -5,14 +5,17 @@ import Playground from "./components/Playground";
 import { Provider } from "react-redux";
 import StoreConfig from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 import PaperWrapper from "./components/PaperWrapper";
-
 const { persistor, store } = StoreConfig();
 
 export default function App() {
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flex: 1, minWidth: 1000 }}
+      horizontal={true}
+    >
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <PaperWrapper>
@@ -20,6 +23,6 @@ export default function App() {
           </PaperWrapper>
         </PersistGate>
       </Provider>
-    </View>
+    </ScrollView>
   );
 }

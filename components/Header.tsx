@@ -33,14 +33,14 @@ const Header = () => {
           }}
         />
         <Menu.Item
-          title={"Template: Stack"}
+          title={"Template: Drawer"}
           onPress={() => {
             dispatch(loadDrawerTemplate());
             showMenu(false);
           }}
         />
         <Menu.Item
-          title={"Reset"}
+          title={"Template: Empty"}
           onPress={() => {
             dispatch(resetState());
             showMenu(false);

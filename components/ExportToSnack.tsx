@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAppSelector } from "../redux/store";
-import createCodeSnippet from "../lib/CodeSnippet";
+import createCodeSnippet from "../util/CodeSnippet";
 import { Button } from "react-native-paper";
 
 interface Props {}

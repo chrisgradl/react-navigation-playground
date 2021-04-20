@@ -11,7 +11,6 @@ body {
 /* These styles disable body scrolling if you are using <ScrollView> */
 body {
   overflow: hidden;
-  min-width: 1000px;
   width: auto !important;
 }
 /* These styles make the root element full-height */
