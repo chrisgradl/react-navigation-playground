@@ -3,7 +3,6 @@ import { View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   addScreen,
-  deleteNavigator,
   editNavigator,
 } from "../../redux/NavigatorReducer";
 import { Button, Checkbox, Title } from "react-native-paper";
@@ -36,7 +35,6 @@ const Inspector: React.FC = () => {
   return (
     <View>
       <TextWithEditFunction
-        key={"screennameedit" + id}
         label={"Name"}
         value={name}
         onValueChangeSubmit={(value) => {
@@ -80,7 +78,6 @@ const Inspector: React.FC = () => {
       >
         Add new Screen
       </Button>
-      <InspectorItemSpace />
       <InspectorItemSpace />
     </View>
   );

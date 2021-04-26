@@ -48,7 +48,7 @@ export default function Playground() {
           <InspectorContainer />
         </View>
         <VLine />
-        <View style={{ flex: 3 }}>
+        <View style={{ flex: 2 }}>
           <PreviewContainer />
           <View
             style={{

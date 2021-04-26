@@ -91,8 +91,8 @@ const PlaygroundNavigator: React.FC<Props> = ({ id }) => {
               {(props: any) =>
                 component.type === "Navigator" ? (
                   <PlaygroundNavigator
-                    key={component.navigatorId}
                     {...props}
+                    key={component.navigatorId}
                     id={component.navigatorId}
                   />
                 ) : (

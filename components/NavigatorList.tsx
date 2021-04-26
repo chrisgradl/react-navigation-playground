@@ -7,45 +7,6 @@ import { ComponentType, PlaygroundScreen } from "../types";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
 import { deleteNavigator, deleteScreen } from "../redux/NavigatorReducer";
 
-const NavItem: React.FC<{
-  selected: boolean;
-  title: string;
-  onPress(): void;
-  onPressDelete?(): void;
-}> = ({ onPress, selected, title, onPressDelete }) => (
-  <List.Item
-    titleStyle={selected && { color: "rgb(0, 122, 255)", fontWeight: "bold" }}
-    title={title}
-    onPress={onPress}
-    right={(props) =>
-      selected ? (
-        <IconButton
-          style={{ padding: 0 }}
-          onPress={onPressDelete}
-          icon={"delete"}
-          size={18}
-        />
-      ) : (
-        <IconButton
-          color={"transparent"}
-          style={{ padding: 0 }}
-          icon={"delete"}
-          size={18}
-        />
-      )
-    }
-  />
-);
-
-const getTitleFromScreen = (screen: PlaygroundScreen, navigators: any) => {
-  return (
-    screen.name +
-    (screen.component.type === ComponentType.Navigator
-      ? " -> " + navigators[screen.component?.navigatorId]?.name
-      : " -> View")
-  );
-};
-
 const NavigatorList: React.FC = () => {
   const navigators = useAppSelector((state) => state.navigators);
 
@@ -111,6 +72,45 @@ const NavigatorList: React.FC = () => {
         <AddNewNavigator />
       </ScrollView>
     </>
+  );
+};
+
+const NavItem: React.FC<{
+  selected: boolean;
+  title: string;
+  onPress(): void;
+  onPressDelete?(): void;
+}> = ({ onPress, selected, title, onPressDelete }) => (
+  <List.Item
+    titleStyle={selected && { color: "rgb(0, 122, 255)", fontWeight: "bold" }}
+    title={title}
+    onPress={onPress}
+    right={() =>
+      selected ? (
+        <IconButton
+          style={{ padding: 0 }}
+          onPress={onPressDelete}
+          icon={"delete"}
+          size={18}
+        />
+      ) : (
+        <IconButton
+          color={"transparent"}
+          style={{ padding: 0 }}
+          icon={"delete"}
+          size={18}
+        />
+      )
+    }
+  />
+);
+
+const getTitleFromScreen = (screen: PlaygroundScreen, navigators: any) => {
+  return (
+    screen.name +
+    (screen.component.type === ComponentType.Navigator
+      ? " -> " + navigators[screen.component?.navigatorId]?.name
+      : " -> View")
   );
 };
 

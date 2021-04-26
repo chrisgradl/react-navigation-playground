@@ -21,6 +21,10 @@ const TextWithEditFunction: React.FC<Props> = ({
   const divRef = useRef(undefined);
   const inputRef = useRef(undefined);
 
+  useEffect(()=> {
+    setText(value)
+  }, [value])
+
   useEffect(() => {
     if (showEdit === true) {
       inputRef?.current?.focus();

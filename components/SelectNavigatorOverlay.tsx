@@ -24,19 +24,20 @@ const SelectNavigatorOverlay: React.FC<Props> = ({
       <Title>Select Navigator or Screen</Title>
       <ScrollView>
         {navigatorList.map((value) => (
-          <>
+          <React.Fragment key={value.id}>
             <List.Item
               title={value.name}
               onPress={() => onSelect(value.name)}
             />
             {Object.values(value.screens).map((screen) => (
               <List.Item
+                key={screen.id}
                 title={screen.name}
                 onPress={() => onSelect(screen.name)}
               />
             ))}
             <View style={{ height: 16 }} />
-          </>
+          </React.Fragment>
         ))}
       </ScrollView>
     </Overlay>

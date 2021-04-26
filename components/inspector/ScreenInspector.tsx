@@ -31,7 +31,6 @@ const ScreenInspector: React.FC = () => {
   return (
     <View>
       <TextWithEditFunction
-        key={"screennameedit" + screen.id}
         label={"Name"}
         value={screen.name}
         onValueChangeSubmit={(value) =>
@@ -55,7 +54,7 @@ const ScreenInspector: React.FC = () => {
           value={screen.component.type}
         >
           {Object.values(ComponentType).map((c) => (
-            <RadioButton.Item value={c} label={c} />
+            <RadioButton.Item key={c} value={c} label={c} />
           ))}
         </RadioButton.Group>
 
@@ -75,7 +74,7 @@ const ScreenInspector: React.FC = () => {
             >
               <Picker.Item label={"Select a Navigator"} value={undefined} />
               {navigatorList.map((nav) => (
-                <Picker.Item label={nav.name} value={nav.id} />
+                <Picker.Item key={nav.id} label={nav.name} value={nav.id} />
               ))}
             </Picker>
           </View>
