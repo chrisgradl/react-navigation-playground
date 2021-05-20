@@ -1,15 +1,13 @@
 import { DrawerActions } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import { usePlaygroundState } from "../../hooks/usePlaygroundState";
 import { Button, List } from "react-native-paper";
-import { PlaygroundScreen } from "../../types";
+import { NavigatorRecord, PlaygroundScreen } from "../../types";
 
-const ScreenView: React.FC<{ parentNavigatorId: string; navigation: any }> = ({
-  navigation,
-}) => {
-  const { navigators } = usePlaygroundState();
-
+const ScreenView: React.FC<{
+  navigation: any;
+  navigators: NavigatorRecord;
+}> = ({ navigation, navigators }) => {
   const screens = Object.values(navigators).reduce((prevvalue, currValue) => {
     const screens = Object.values(currValue.screens);
     return [...prevvalue, ...screens];

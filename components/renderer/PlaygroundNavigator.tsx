@@ -3,11 +3,10 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from "@react-navigation/stack";
-import { usePlaygroundState } from "../../hooks/usePlaygroundState";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ScreenView from "./ScreenView";
-import { PlaygroundNavigatorType } from "../../types";
+import { NavigatorRecord, PlaygroundNavigatorType } from "../../types";
 import { IconButton, Subheading } from "react-native-paper";
 
 const createNavigatorByType = (type: PlaygroundNavigatorType) => {
@@ -23,11 +22,10 @@ const createNavigatorByType = (type: PlaygroundNavigatorType) => {
 
 interface Props {
   id: string;
+  navigators: NavigatorRecord;
 }
 
-const PlaygroundNavigator: React.FC<Props> = ({ id }) => {
-  const { navigators } = usePlaygroundState();
-
+const PlaygroundNavigator: React.FC<Props> = ({ id, navigators }) => {
   const navigator = navigators[id];
 
   if (!navigator) {
@@ -94,9 +92,10 @@ const PlaygroundNavigator: React.FC<Props> = ({ id }) => {
                     {...props}
                     key={component.navigatorId}
                     id={component.navigatorId}
+                    navigators={navigators}
                   />
                 ) : (
-                  <ScreenView {...props} parentNavigatorId={id} />
+                  <ScreenView {...props} navigators={navigators} />
                 )
               }
             </Navigation.Screen>
