@@ -8,19 +8,19 @@ import {
 const fontConfig = {
   web: {
     regular: {
-      fontFamily: "Inter, Helvetica, Roboto",
+      fontFamily: "Inter",
       fontWeight: "400",
     },
     medium: {
-      fontFamily: "Inter, Helvetica, Roboto",
+      fontFamily: "Inter",
       fontWeight: "500",
     },
     light: {
-      fontFamily: "Inter, Helvetica, Roboto",
+      fontFamily: "Inter",
       fontWeight: "300",
     },
     thin: {
-      fontFamily: "Inter, Helvetica, Roboto",
+      fontFamily: "Inter",
       fontWeight: "100",
     },
   },

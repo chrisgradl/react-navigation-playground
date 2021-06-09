@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
-    "deploy": "GENERATE_SOURCEMAP=false expo build:web --no-pwa && cp -R .vercel web-build && cd web-build && vercel --prod && cd .."
+    "deploy": "GENERATE_SOURCEMAP=false expo build:web --no-pwa && cp -R .vercel web-build && cd web-build && vercel --prod && cd ..",
+    "build": "next build"
   },
   "jest": {
     "preset": "jest-expo"
@@ -28,6 +29,7 @@
     "expo-status-bar": "~1.0.3",
     "expo-web-browser": "~8.6.0",
     "nanoid": "^3.1.22",
+    "next": "^10.2.3",
     "prettier": "^2.2.1",
     "prism-react-renderer": "^1.2.0",
     "react": "16.13.1",
@@ -37,7 +39,7 @@
     "react-native-paper": "^4.7.2",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
-    "react-native-screens": "~2.15.0",
+    "react-native-screens": "^3.3.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.3",
     "redux": "^4.0.5",
@@ -45,11 +47,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@expo/next-adapter": "^2.1.77",
     "@expo/webpack-config": "^0.12.66",
     "@types/jest": "^26.0.22",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-dynamic-import": "^2.1.0",
     "jest-expo": "~40.0.0",
+    "next-fonts": "^1.5.1",
+    "next-images": "^1.7.0",
     "prettier": "^2.2.1",
     "typescript": "~4.0.0"
   },

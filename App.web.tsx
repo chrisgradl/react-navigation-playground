@@ -1,4 +1,4 @@
-import "./styles.css";
+
 import "react-native-gesture-handler";
 import React from "react";
 import Playground from "./components/Playground";
@@ -8,6 +8,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import { ScrollView } from "react-native";
 import PaperWrapper from "./components/PaperWrapper";
 const { persistor, store } = StoreConfig();
+
+if (!global.setImmediate) {
+  // @ts-ignore
+  global.setImmediate = setTimeout;
+}
 
 export default function App() {
   return (
