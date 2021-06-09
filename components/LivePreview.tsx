@@ -2,8 +2,13 @@ import { useAppSelector } from "../redux/store";
 import { View } from "react-native";
 import Smartphone from "./Smartphone";
 import ErrorBoundary from "./ErrorBoundary";
-import PlaygroundRenderer from "./renderer/PlaygroundRenderer";
 import React from "react";
+
+import dynamic from 'next/dynamic'
+
+const PlaygroundRenderer = dynamic(() =>
+    import("./renderer/PlaygroundRenderer"), {ssr: false}
+)
 
 export default function LivePreview() {
   const playgroundState = useAppSelector((state) => state);
