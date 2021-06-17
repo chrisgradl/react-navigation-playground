@@ -29,7 +29,7 @@ const ThemeSwitch: React.FC = () => {
           }}
         >
           <Subheading style={{ flex: 1 }}>Load Theme</Subheading>
-          <IconButton size={24} icon={"arrow-down-drop-circle-outline"} />
+          <IconButton onPress={openMenu} size={24} icon={"arrow-down-drop-circle-outline"} />
         </TouchableOpacity>
       }
     >

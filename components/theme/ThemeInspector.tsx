@@ -1,17 +1,15 @@
 import React from "react";
-import { View } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
-import InspectorItem, { InspectorItemSpace } from "../inspector/InspectorItem";
+import {View} from "react-native";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
+import InspectorItem, {InspectorItemSpace} from "../inspector/InspectorItem";
 import ThemeSwitch from "../ThemeSwitch";
-import { setThemeColor } from "../../redux/ThemeReducer";
-import TextWithEditFunction from "../TextWithEditFunction";
-import { Caption, Checkbox, Title } from "react-native-paper";
-import Color from "color";
+import {setThemeColor} from "../../redux/ThemeReducer";
+import {Title} from "react-native-paper";
+import {ColorItem} from "./ColorItem";
 
-interface Props {}
 
-const ThemeInspector: React.FC<Props> = () => {
-  const { colors, dark } = useAppSelector((state) => state.theme);
+const ThemeInspector: React.FC = () => {
+  const colors = useAppSelector((state) => state.theme.colors);
   const dispatch = useAppDispatch();
 
   return (
@@ -23,42 +21,15 @@ const ThemeInspector: React.FC<Props> = () => {
       <Title>Colors</Title>
       <InspectorItemSpace />
       {ThemeColors.map(({ description, name: key }) => (
-        <React.Fragment key={key}>
-          <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-            <View style={{ flex: 1 }}>
-              <TextWithEditFunction
-                label={key}
-                value={colors[key]}
-                validationText={"Not a valid Color"}
-                validation={(text) => {
-                  try {
-                    Color(text);
-                    return true;
-                  } catch (e) {
-                    return false;
-                  }
-                  return false;
-                }}
-                onValueChangeSubmit={(value) =>
-                  dispatch(setThemeColor({ key, value }))
-                }
-              />
-              <Caption style={{ color: "black" }}>{description}</Caption>
-            </View>
-            <View
-              style={{
-                marginTop: 8,
-                backgroundColor: colors[key],
-                width: 40,
-                height: 40,
-                marginLeft: 8,
-                borderRadius: 20,
-              }}
-            />
-          </View>
-          <InspectorItemSpace />
-          <InspectorItemSpace />
-        </React.Fragment>
+        <ColorItem
+          key={key}
+          label={key}
+          value={colors[key]}
+          onValueChangeSubmit={(value) =>
+            dispatch(setThemeColor({ key, value }))
+          }
+          description={description}
+        />
       ))}
     </View>
   );
