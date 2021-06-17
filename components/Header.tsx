@@ -1,11 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import { Appbar, Menu } from "react-native-paper";
 import ExportToSnack from "./ExportToSnack";
 import { useAppDispatch } from "../redux/store";
-import {loadDrawerTemplate, loadTabsTemplate, resetState} from "../redux/LoadProjectAction";
+import {
+  loadDrawerTemplate,
+  loadTabsTemplate,
+  resetState,
+} from "../redux/LoadProjectAction";
 
 const Header = () => {
-  const anchorRef = useRef();
 
   const [menu, showMenu] = useState(false);
 
@@ -17,7 +20,6 @@ const Header = () => {
         anchor={
           <Appbar.Action
             color={"white"}
-            ref={anchorRef}
             icon="menu"
             onPress={() => showMenu(true)}
           />

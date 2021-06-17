@@ -1,11 +1,12 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { IconButton, List } from "react-native-paper";
+import { Button, IconButton, List } from "react-native-paper";
 import AddNewNavigator from "./AddNewNavigator";
 import { ComponentType, PlaygroundScreen } from "../types";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
 import { deleteNavigator, deleteScreen } from "../redux/NavigatorReducer";
+import ThemeButton from "./ThemeButton";
 
 const NavigatorList: React.FC = () => {
   const navigators = useAppSelector((state) => state.navigators);
@@ -19,6 +20,7 @@ const NavigatorList: React.FC = () => {
   return (
     <>
       <ScrollView style={{ flex: 1 }}>
+        <ThemeButton />
         {navigatorArray.map(({ id, name, screens, type }) => (
           <View
             key={id}

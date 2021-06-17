@@ -61,7 +61,7 @@ const ScreenInspector: React.FC = () => {
         {screen.component.type === ComponentType.Navigator && (
           <View style={{ paddingLeft: 14, paddingRight: 24 }}>
             <Picker
-              style={{ fontFamily: "Inter", height: 30 }}
+              style={{ fontFamily: "Inter", height: 30, borderColor: "black" }}
               selectedValue={screen.component.navigatorId}
               onValueChange={(value) =>
                 editScreen({

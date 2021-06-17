@@ -298,3 +298,10 @@ export const TemplateDrawer = {
   },
   preview: "UI",
 };
+
+const Projects = {
+  Tabs: TemplateTabs,
+  Drawer: TemplateDrawer,
+};
+
+export default Projects;

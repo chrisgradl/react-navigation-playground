@@ -8,15 +8,22 @@ import PreviewSwitch from "./PreviewSwitch";
 import { selectPreviewPanel } from "../redux/PreviewReducer";
 import CodePanel from "./CodePanel";
 import Header from "./Header";
-import LivePreview from "./LivePreview";
+import { LivePreviewWrapper } from "./LivePreview";
 import VLine from "./VLine";
+import ThemeInspector from "./theme/ThemeInspector";
 
 const InspectorContainer = () => {
   const inspector = useAppSelector((state) => state.inspector);
 
   return (
     <ScrollView>
-      {inspector.type === "Navigator" ? <Inspector /> : <ScreenInspector />}
+      {inspector.type === "Navigator" ? (
+        <Inspector />
+      ) : inspector.type === "Screen" ? (
+        <ScreenInspector />
+      ) : (
+        <ThemeInspector />
+      )}
     </ScrollView>
   );
 };
@@ -30,7 +37,7 @@ const PreviewContainer = () => {
         paddingVertical: 32,
       }}
     >
-      {preview === "Code" ? <CodePanel /> : <LivePreview />}
+      {preview === "Code" ? <CodePanel /> : <LivePreviewWrapper />}
     </ScrollView>
   );
 };

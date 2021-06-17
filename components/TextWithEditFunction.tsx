@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TouchableOpacity, View, ViewStyle } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TouchableOpacity, View, ViewStyle, TextInput as TextInputRN } from "react-native";
+import { Caption, TextInput } from "react-native-paper";
 
 interface Props {
   value: string;
   label?: string;
   containerStyle?: ViewStyle;
   onValueChangeSubmit(value: string);
+  validation?(text: string): boolean;
+  validationText?: string;
 }
 
 const TextWithEditFunction: React.FC<Props> = ({
@@ -14,16 +16,19 @@ const TextWithEditFunction: React.FC<Props> = ({
   value,
   label,
   containerStyle = {},
+  validation = () => true,
+  validationText = "Input not allowed",
 }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [text, setText] = useState(value);
+  const [error, setError] = useState(false);
 
   const divRef = useRef(undefined);
-  const inputRef = useRef(undefined);
+  const inputRef = useRef<TextInputRN>(undefined);
 
-  useEffect(()=> {
-    setText(value)
-  }, [value])
+  useEffect(() => {
+    setText(value);
+  }, [value]);
 
   useEffect(() => {
     if (showEdit === true) {
@@ -31,10 +36,28 @@ const TextWithEditFunction: React.FC<Props> = ({
     }
   }, [showEdit]);
 
+  useEffect(() => {
+    if (error) {
+      setError(false);
+    }
+  }, [text]);
+
+  const onSubmit = (text) => {
+    const isValid = validation(text);
+    if (isValid) {
+      onValueChangeSubmit(text);
+      setShowEdit(false);
+      setError(false);
+      inputRef.current.blur();
+    } else {
+      setError(true);
+    }
+  };
+
   if (showEdit) {
     return (
       <View
-        style={[containerStyle, { flexDirection: "row", alignItems: "center" }]}
+        style={[containerStyle, { justifyContent: "center" }]}
       >
         <div ref={divRef} style={{ display: "contents" }}>
           <TextInput
@@ -44,17 +67,13 @@ const TextWithEditFunction: React.FC<Props> = ({
             onBlur={(e) => {
               if (!divRef.current.contains(e.relatedTarget)) {
                 //only submit if no button inside the textinput is clicked
-                onValueChangeSubmit(text);
-                setShowEdit(false);
+                onSubmit(text);
               } else {
                 //check if tab key is pressed
               }
             }}
-            blurOnSubmit={true}
-            onSubmitEditing={() => {
-              onValueChangeSubmit(text);
-              setShowEdit(false);
-            }}
+            blurOnSubmit={false}
+            onSubmitEditing={() => onSubmit(text)}
             dense={true}
             mode={"outlined"}
             onChangeText={setText}
@@ -70,6 +89,7 @@ const TextWithEditFunction: React.FC<Props> = ({
             }
           />
         </div>
+        {error && <Caption style={{ color: "red" }}>{validationText}</Caption>}
       </View>
     );
   }
@@ -93,6 +113,7 @@ const TextWithEditFunction: React.FC<Props> = ({
             />
           }
         />
+        {error && <Caption style={{ color: "red" }}>{validationText}</Caption>}
       </TouchableOpacity>
     </View>
   );

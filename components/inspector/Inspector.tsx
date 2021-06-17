@@ -51,15 +51,6 @@ const Inspector: React.FC = () => {
         />
       </InspectorItem>
       <InspectorItemSpace />
-      {isRootNav && (
-        <>
-          <InspectorItem>
-            <ThemeSwitch />
-          </InspectorItem>
-          <InspectorItemSpace />
-        </>
-      )}
-
       <NavigationTypeItem
         onChange={(type) => dispatch(editNavigator({ id, data: { type } }))}
         value={navigator.type}

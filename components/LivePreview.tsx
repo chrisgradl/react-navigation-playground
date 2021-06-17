@@ -4,14 +4,20 @@ import Smartphone from "./Smartphone";
 import ErrorBoundary from "./ErrorBoundary";
 import React from "react";
 
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const PlaygroundRenderer = dynamic(() =>
-    import("./renderer/PlaygroundRenderer"), {ssr: false}
-)
+const PlaygroundRenderer = dynamic(
+  () => import("./renderer/PlaygroundRenderer"),
+  { ssr: false }
+);
 
-export default function LivePreview() {
+export function LivePreviewWrapper() {
   const playgroundState = useAppSelector((state) => state);
+
+  return <LivePreview project={playgroundState} />;
+}
+
+export default function LivePreview({ project }) {
   return (
     <View
       style={{
@@ -21,7 +27,7 @@ export default function LivePreview() {
     >
       <Smartphone>
         <ErrorBoundary>
-          <PlaygroundRenderer playgroundState={playgroundState} />
+          <PlaygroundRenderer playgroundState={project} />
         </ErrorBoundary>
       </Smartphone>
     </View>

@@ -1,6 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore, FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "./RootReducer";
 import { TemplateTabs } from "../Templates";
@@ -13,6 +18,11 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: TemplateTabs as any,
 });

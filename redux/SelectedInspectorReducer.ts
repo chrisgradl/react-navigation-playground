@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
 interface SelectedInspector {
-  type: "Screen" | "Navigator";
+  type: "Screen" | "Navigator" | "Theme";
   navigatorId: string;
   screenId?: string;
 }
