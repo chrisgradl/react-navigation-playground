@@ -1,10 +1,10 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../redux/store";
-import { selectTheme, setTheme } from "../redux/ThemeReducer";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { selectTheme, setTheme } from "../../redux/ThemeReducer";
 import { IconButton, Menu, Subheading, Switch } from "react-native-paper";
 import { TouchableOpacity, View } from "react-native";
 
-const ThemeSwitch: React.FC = () => {
+const ThemeTemplateDropdown: React.FC = () => {
   const dispatch = useAppDispatch();
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
@@ -48,4 +48,4 @@ const ThemeSwitch: React.FC = () => {
   );
 };
 
-export default ThemeSwitch;
+export default ThemeTemplateDropdown;

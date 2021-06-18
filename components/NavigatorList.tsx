@@ -6,7 +6,8 @@ import AddNewNavigator from "./AddNewNavigator";
 import { ComponentType, PlaygroundScreen } from "../types";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
 import { deleteNavigator, deleteScreen } from "../redux/NavigatorReducer";
-import ThemeButton from "./ThemeButton";
+import ThemeButton from "./theme/ThemeButton";
+import DebugMenuButton from "./debug/DebugMenuButton";
 
 const NavigatorList: React.FC = () => {
   const navigators = useAppSelector((state) => state.navigators);
@@ -21,6 +22,7 @@ const NavigatorList: React.FC = () => {
     <>
       <ScrollView style={{ flex: 1 }}>
         <ThemeButton />
+        <DebugMenuButton />
         {navigatorArray.map(({ id, name, screens, type }) => (
           <View
             key={id}

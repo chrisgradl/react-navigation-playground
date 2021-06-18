@@ -3,10 +3,17 @@ import { ScrollView } from "react-native";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import PaperWrapper from "../components/PaperWrapper";
-import Playground from "../components/Playground";
 import StoreConfig from "../redux/store";
+import dynamic from "next/dynamic";
 
 const { persistor, store } = StoreConfig();
+
+
+const Playground = dynamic(
+  () => import("../components/Playground"),
+  { ssr: false }
+);
+
 
 export default function App() {
   return (

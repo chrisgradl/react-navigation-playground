@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
 interface SelectedInspector {
-  type: "Screen" | "Navigator" | "Theme";
+  type: "Screen" | "Navigator" | "Theme" | "Debug";
   navigatorId: string;
   screenId?: string;
 }
@@ -18,7 +18,6 @@ const slice = createSlice({
     setSelectedInspector: (state, action: PayloadAction<SelectedInspector>) =>
       action.payload,
   },
-
 });
 
 export const { setSelectedInspector } = slice.actions;

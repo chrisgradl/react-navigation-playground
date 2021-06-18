@@ -11,19 +11,28 @@ import Header from "./Header";
 import { LivePreviewWrapper } from "./LivePreview";
 import VLine from "./VLine";
 import ThemeInspector from "./theme/ThemeInspector";
+import DebugInspector from "./debug/DebugInspector";
 
-const InspectorContainer = () => {
+const InspectorSwitch = () => {
   const inspector = useAppSelector((state) => state.inspector);
 
+  if (inspector.type === "Navigator") {
+    return <Inspector />;
+  } else if (inspector.type === "Screen") {
+    return <ScreenInspector />;
+  } else if (inspector.type === "Theme") {
+    return <ThemeInspector />;
+  } else if (inspector.type === "Debug") {
+    return <DebugInspector />;
+  }
+
+  return null;
+};
+
+const InspectorContainer = () => {
   return (
     <ScrollView>
-      {inspector.type === "Navigator" ? (
-        <Inspector />
-      ) : inspector.type === "Screen" ? (
-        <ScreenInspector />
-      ) : (
-        <ThemeInspector />
-      )}
+      <InspectorSwitch />
     </ScrollView>
   );
 };
