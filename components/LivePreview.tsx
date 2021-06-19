@@ -3,14 +3,8 @@ import { View } from "react-native";
 import Smartphone from "./Smartphone";
 import ErrorBoundary from "./ErrorBoundary";
 import React from "react";
-import dynamic from "next/dynamic";
 import { navigationRef } from "./debug/DebugInspector";
 import PlaygroundRenderer from "./renderer/PlaygroundRenderer";
-
-// const PlaygroundRenderer = dynamic(
-//   () => import("./renderer/PlaygroundRenderer"),
-//   { ssr: false }
-// );
 
 export function LivePreviewWrapper() {
   const playgroundState = useAppSelector((state) => state);
@@ -28,7 +22,9 @@ export default function LivePreview({ project }) {
     >
       <Smartphone>
         <ErrorBoundary>
-          <PlaygroundRenderer playgroundState={project} ref={navigationRef} />
+          {project ? (
+            <PlaygroundRenderer playgroundState={project} ref={navigationRef} />
+          ) : null}
         </ErrorBoundary>
       </Smartphone>
     </View>

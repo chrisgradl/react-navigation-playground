@@ -7,6 +7,7 @@ import {
   loadTabsTemplate,
   resetState,
 } from "../redux/LoadProjectAction";
+import CreateProjectButton from "./CreateProjectButton";
 
 const Header = () => {
 
@@ -51,6 +52,7 @@ const Header = () => {
       </Menu>
 
       <Appbar.Content title="React-Navigation Playground" />
+        <CreateProjectButton />
       <ExportToSnack />
       <Appbar.Action
         icon="github"

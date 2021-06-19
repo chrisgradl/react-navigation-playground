@@ -28,10 +28,12 @@ web-build/
 *.orig.*
 # Next.js
 /.next/*
-/out/
+/out/*
 # Next.js production
 /build/
 # Next.js dependencies
 /.pnp
 .pnp.js
 # @end @expo/next-adapter
+
+.env.local
