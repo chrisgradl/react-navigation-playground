@@ -8,7 +8,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import PaperWrapper from "./PaperWrapper";
 import Playground from "./Playground";
 
-
 export default function App() {
   const { query } = useRouter();
 
@@ -24,21 +23,19 @@ export default function App() {
 
     const fetchData = async (id) => {
       try {
-        history.replaceState(null, null, "/");
         setLoading(true);
         const res = await fetch(`api/project/${id}`, { signal });
         const json = await res.json();
-        console.log("got data", json.payload);
         setPreState(json.payload);
       } catch (e) {
         console.log(e);
       } finally {
         setLoading(false);
+        history.replaceState(null, null, "/");
       }
     };
 
     if (id) {
-      console.log("got id fetch data", id);
       fetchData(id);
     } else {
       console.log("no id");
@@ -51,7 +48,7 @@ export default function App() {
     };
   }, [id]);
 
-  const {store, persistor} = useStore(preState);
+  const { store, persistor } = useStore(preState);
 
   if (loading) {
     return <ActivityIndicator />;

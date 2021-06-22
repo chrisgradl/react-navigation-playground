@@ -61,11 +61,10 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function useStore(initialState) {
   const store = useMemo(() => {
-    console.log("initial store differenct call memo", initialState)
     const createdStore = makeStore(initialState);
     const persistor = persistStore(createdStore );
     if (initialState) {
-      persistor.purge().then(res => console.log(res));
+      persistor.purge();
     }
     return { store: createdStore, persistor };
   }, [initialState]);

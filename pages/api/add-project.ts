@@ -30,7 +30,7 @@ export default async function addProject(
       return res.status(500).json({ error: error.message });
     }
 
-    return res.status(200).json(project);
+    return res.status(200).json(project[0]);
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }

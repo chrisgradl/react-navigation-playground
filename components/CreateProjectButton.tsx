@@ -9,7 +9,6 @@ import {
   TextInput,
   Title,
 } from "react-native-paper";
-import { TemplateTabs } from "../Templates";
 import { RootState, useAppSelector } from "../redux/store";
 import { View } from "react-native";
 import { useRouter } from "next/router";
@@ -29,7 +28,7 @@ async function createProject(data: projectPost) {
 
 const CreateProjectButton: React.FC = () => {
   const [show, setShow] = useState(false);
-  const [title, setTitle] = useState<string | undefined>();
+  const [title, setTitle] = useState<string | null>();
   const router = useRouter();
 
   const payload = useAppSelector((state) => state);
@@ -41,7 +40,7 @@ const CreateProjectButton: React.FC = () => {
     try {
       const res = await createProject({ title, payload });
       if (res) {
-        router.push({ pathname: "/", query: { id: res.id } });
+        router.push({ pathname: "/feed", query: { id: res.id } });
       }
     } catch (e) {
       setError(e.message);
