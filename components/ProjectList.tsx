@@ -14,7 +14,15 @@ const ProjectList: React.FC<Props> = ({ projects, onPress, onPressEdit }) => {
     <>
       {projects.map((project) => (
         <React.Fragment key={project.id}>
-          <Card onPress={() => onPress(project)}>
+          <Card
+            elevation={0}
+            style={{
+              borderRadius: 8,
+              backgroundColor: "rgba(0, 122, 255, 0.12)",
+              marginBottom: 16,
+            }}
+            onPress={() => onPress(project)}
+          >
             <Card.Title
               title={project.title}
               subtitle={new Date(project.createdAt).toLocaleString()}

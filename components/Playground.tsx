@@ -13,14 +13,23 @@ import ThemeInspector from "./theme/ThemeInspector";
 import DebugInspector from "./debug/DebugInspector";
 import dynamic from "next/dynamic";
 
-const LivePreview  = dynamic(() => import("./LivePreview"), {
-    ssr: false,
+const LivePreview = dynamic(() => import("./LivePreview"), {
+  ssr: false,
 });
 
 export function LivePreviewWrapper() {
-    const playgroundState = useAppSelector((state) => state);
+  const playgroundState = useAppSelector((state) => state);
 
-    return <LivePreview project={playgroundState} />;
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+      }}
+    >
+      <LivePreview project={playgroundState} />
+    </View>
+  );
 }
 
 const InspectorSwitch = () => {

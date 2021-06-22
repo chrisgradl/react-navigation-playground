@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import useSWR from "swr";
-import { Button, Card, Title } from "react-native-paper";
+import { Button, Card, IconButton, Title } from "react-native-paper";
 import { Project } from "../lib/types";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -51,46 +51,34 @@ const Feed = ({ data: initialData }: Props) => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-      }}
-    >
-      <View>
-        <ScrollView
-          style={{
-            padding: 16,
-            minWidth: 400,
-            backgroundColor: "lightgrey",
-            borderRadius: 20,
-          }}
-          stickyHeaderIndices={[0]}
-        >
-          <Title
-            style={{
-              fontSize: 24,
-              textAlign: "center",
-              backgroundColor: "lightgrey",
-            }}
-          >
-            Recent Projects
-          </Title>
-          <ProjectList
-            projects={data}
-            onPress={setProject}
-            onPressEdit={(p) =>
-              router.push({ pathname: "/", query: { id: p.id } })
-            }
-          />
-        </ScrollView>
-      </View>
-      <View style={{ width: 16 }} />
-      <View>
-        <Title style={{ fontSize: 24, textAlign: "center" }}>
-          {selectedProject?.title ?? "nothing selected"}
-        </Title>
-        <LivePreview project={selectedProject?.payload} />
+    <View style={{ flex: 1 }}>
+      <View style={{ height: 30 }} />
+      <Title style={{ textAlign: "center", fontSize: 30 }}>
+        Published Projects
+      </Title>
+      <View style={{ height: 30 }} />
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <View style={{ width: 350 }}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ProjectList
+              projects={data}
+              onPress={setProject}
+              onPressEdit={(p) =>
+                router.push({ pathname: "/", query: { id: p.id } })
+              }
+            />
+          </ScrollView>
+        </View>
+        <View style={{ width: 30 }} />
+        <View style={{paddingVertical: 30}}>
+          <LivePreview project={selectedProject?.payload} />
+        </View>
       </View>
     </View>
   );
