@@ -10,16 +10,27 @@ const LivePreview = dynamic(() => import("../components/LivePreview"), {
   ssr: false,
 });
 
-const Feed: React.FC = () => {
+interface Props {
+  data: Project[];
+}
+
+const Feed = ({ data: initialData }: Props) => {
   const { data, error } = useSWR<Project[]>("/api/latest-projects", {
-    // initialData: allStages,
-    //refreshInterval: 5000,
+    initialData,
     onSuccess: (data) => {
       if (data.length > 0 && !selectedProject) {
         setProject(data[0]);
       }
     },
   });
+
+  React.useEffect(() => {
+    if (initialData) {
+      if (initialData.length > 0 && !selectedProject) {
+        setProject(initialData[0]);
+      }
+    }
+  }, [initialData]);
 
   const router = useRouter();
 
@@ -36,12 +47,16 @@ const Feed: React.FC = () => {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <View
-        style={{
-          flexDirection: "row",
-        }}
-      >
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row",
+      }}
+    >
+      <View>
+        <Title style={{ fontSize: 24, textAlign: "center" }}>
+          Recent Projects
+        </Title>
         <ScrollView
           style={{
             padding: 16,
@@ -50,9 +65,6 @@ const Feed: React.FC = () => {
             borderRadius: 20,
           }}
         >
-          <Title style={{ fontSize: 24, textAlign: "center" }}>
-            Recent Projects
-          </Title>
           {data.map((data) => (
             <>
               <Card onPress={() => setProject(data)}>
@@ -74,16 +86,31 @@ const Feed: React.FC = () => {
             </>
           ))}
         </ScrollView>
-        <View style={{ width: 16 }} />
-        <View>
-          <Title style={{ fontSize: 24, textAlign: "center" }}>
-            {selectedProject?.title ?? "nothing selected"}
-          </Title>
-          <LivePreview project={selectedProject?.payload} />
-        </View>
+      </View>
+      <View style={{ width: 16 }} />
+      <View>
+        <Title style={{ fontSize: 24, textAlign: "center" }}>
+          {selectedProject?.title ?? "nothing selected"}
+        </Title>
+        <LivePreview project={selectedProject?.payload} />
       </View>
     </View>
   );
 };
+
+// export const getStaticProps: GetStaticProps<Props> = async () => {
+//   const data = await getProjects();
+//
+//   if (!data) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+//
+//   return {
+//     revalidate: 60,
+//     props: { data },
+//   };
+// };
 
 export default Feed;

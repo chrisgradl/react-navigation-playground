@@ -1,5 +1,5 @@
-import React, { forwardRef, useRef, useState } from "react";
-import { Appbar, Menu } from "react-native-paper";
+import React, { useState } from "react";
+import { Appbar, Button, Menu } from "react-native-paper";
 import ExportToSnack from "./ExportToSnack";
 import { useAppDispatch } from "../redux/store";
 import {
@@ -8,12 +8,14 @@ import {
   resetState,
 } from "../redux/LoadProjectAction";
 import CreateProjectButton from "./CreateProjectButton";
+import {useRouter} from "next/router";
 
 const Header = () => {
-
   const [menu, showMenu] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const router = useRouter()
 
   return (
     <Appbar.Header>
@@ -52,7 +54,12 @@ const Header = () => {
       </Menu>
 
       <Appbar.Content title="React-Navigation Playground" />
-        <CreateProjectButton />
+
+      <Button color={"white"} onPress={() => router.push("/feed")}>
+        Feed
+      </Button>
+
+      <CreateProjectButton />
       <ExportToSnack />
       <Appbar.Action
         icon="github"

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import supabase, { getProjectById } from "../../../lib/supabase";
+import { getProjectById } from "../../../lib/supabase";
 
 export default async function projects(
   req: NextApiRequest,

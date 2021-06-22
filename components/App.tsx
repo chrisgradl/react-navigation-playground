@@ -1,0 +1,75 @@
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { useStore } from "../redux/store";
+import { ActivityIndicator } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import PaperWrapper from "./PaperWrapper";
+import Playground from "./Playground";
+
+
+export default function App() {
+  const { query } = useRouter();
+
+  const id = query?.id;
+
+  const [preState, setPreState] = useState();
+
+  const [loading, setLoading] = useState(false);
+
+  React.useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const fetchData = async (id) => {
+      try {
+        history.replaceState(null, null, "/");
+        setLoading(true);
+        const res = await fetch(`api/project/${id}`, { signal });
+        const json = await res.json();
+        console.log("got data", json.payload);
+        setPreState(json.payload);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      console.log("got id fetch data", id);
+      fetchData(id);
+    } else {
+      console.log("no id");
+    }
+
+    return () => {
+      if (controller) {
+        controller.abort();
+      }
+    };
+  }, [id]);
+
+  const {store, persistor} = useStore(preState);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
+  return (
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flex: 1, minWidth: 1000 }}
+      horizontal={true}
+    >
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <PaperWrapper>
+            <Playground />
+          </PaperWrapper>
+        </PersistGate>
+      </Provider>
+    </ScrollView>
+  );
+}

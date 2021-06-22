@@ -14,10 +14,6 @@ import { RootState, useAppSelector } from "../redux/store";
 import { View } from "react-native";
 import { useRouter } from "next/router";
 
-interface Props {}
-
-const body = { title: "Hello World", payload: TemplateTabs };
-
 interface projectPost {
   title: string;
   payload: RootState;
@@ -31,7 +27,7 @@ async function createProject(data: projectPost) {
   return res.json();
 }
 
-const CreateProjectButton: React.FC<Props> = () => {
+const CreateProjectButton: React.FC = () => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState<string | undefined>();
   const router = useRouter();
@@ -45,7 +41,7 @@ const CreateProjectButton: React.FC<Props> = () => {
     try {
       const res = await createProject({ title, payload });
       if (res) {
-        router.push('/feed');
+        router.push({ pathname: "/", query: { id: res.id } });
       }
     } catch (e) {
       setError(e.message);
@@ -54,7 +50,7 @@ const CreateProjectButton: React.FC<Props> = () => {
 
   return (
     <View>
-      <Button color={"white"} onPress={() => setShow(true)} mode={"outlined"}>
+      <Button color={"white"} onPress={() => setShow(true)}>
         Publish Project
       </Button>
       <Portal>
@@ -100,7 +96,11 @@ const CreateProjectButton: React.FC<Props> = () => {
               label={"Title"}
             />
             <View style={{ height: 16 }} />
-            <Button onPress={onPressPublish} disabled={!title} mode={"contained"}>
+            <Button
+              onPress={onPressPublish}
+              disabled={!title}
+              mode={"contained"}
+            >
               Publish
             </Button>
             {error ? <Subheading>{error}</Subheading> : null}

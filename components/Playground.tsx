@@ -8,10 +8,20 @@ import PreviewSwitch from "./PreviewSwitch";
 import { selectPreviewPanel } from "../redux/PreviewReducer";
 import CodePanel from "./CodePanel";
 import Header from "./Header";
-import { LivePreviewWrapper } from "./LivePreview";
 import VLine from "./VLine";
 import ThemeInspector from "./theme/ThemeInspector";
 import DebugInspector from "./debug/DebugInspector";
+import dynamic from "next/dynamic";
+
+const LivePreview  = dynamic(() => import("./LivePreview"), {
+    ssr: false,
+});
+
+export function LivePreviewWrapper() {
+    const playgroundState = useAppSelector((state) => state);
+
+    return <LivePreview project={playgroundState} />;
+}
 
 const InspectorSwitch = () => {
   const inspector = useAppSelector((state) => state.inspector);
