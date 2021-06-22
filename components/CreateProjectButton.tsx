@@ -20,7 +20,7 @@ interface projectPost {
 }
 
 async function createProject(data: projectPost) {
-  const res = await fetch(`http://localhost:3000/api/add-project`, {
+  const res = await fetch(`/api/add-project`, {
     method: "POST",
     body: JSON.stringify(data),
   });
