@@ -17,7 +17,7 @@ const PlaygroundRenderer = forwardRef<NavigationContainerRef, Props>(
     return (
       <SafeAreaProvider>
         <PaperProvider theme={theme}>
-          <NavigationContainer ref={ref} theme={theme}>
+          <NavigationContainer documentTitle={{enabled: false}} ref={ref} theme={theme}>
             <PlaygroundNavigator id={rootId} navigators={navigators} />
           </NavigationContainer>
         </PaperProvider>
