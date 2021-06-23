@@ -75,7 +75,7 @@ export default function Playground() {
     <View style={{ flex: 1 }}>
       <Header />
       <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={{ flex: 1, padding: 16 }}>
+        <View style={{ flex: 1, padding: 16, backgroundColor: "#fafafa" }}>
           <NavigatorList />
         </View>
         <VLine />

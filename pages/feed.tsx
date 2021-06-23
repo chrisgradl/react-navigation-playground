@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import useSWR from "swr";
-import { Button, Card, IconButton, Title } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Button,
+  Card,
+  IconButton,
+  Title,
+} from "react-native-paper";
 import { Project } from "../lib/types";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -9,6 +15,7 @@ import ProjectList from "../components/ProjectList";
 
 const LivePreview = dynamic(() => import("../components/LivePreview"), {
   ssr: false,
+  loading: () => <View style={{ width: 400 }} />,
 });
 
 interface Props {
@@ -42,21 +49,23 @@ const Feed = ({ data: initialData }: Props) => {
 
   const isLoading = !data && !error;
 
-  if (isLoading) {
-    return <Title>Loading...</Title>;
-  }
-
   if (error) {
     return <Title>Error... {error.message}</Title>;
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ height: 30 }} />
-      <Title style={{ textAlign: "center", fontSize: 30 }}>
-        Published Projects
-      </Title>
-      <View style={{ height: 30 }} />
+    <View style={{ flex: 1, backgroundColor: "#eaeaea" }}>
+      <View
+        style={{
+          alignItems: "center",
+          backgroundColor: "white",
+          paddingVertical: 8,
+          borderColor: "lightgrey",
+          borderBottomWidth: 0.3,
+        }}
+      >
+        <Title style={{ fontSize: 24 }}>Published Navigations</Title>
+      </View>
       <View
         style={{
           flex: 1,
@@ -64,19 +73,24 @@ const Feed = ({ data: initialData }: Props) => {
           justifyContent: "center",
         }}
       >
-        <View style={{ width: 350 }}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <ProjectList
-              projects={data}
-              onPress={setProject}
-              onPressEdit={(p) =>
-                router.push({ pathname: "/", query: { id: p.id } })
-              }
-            />
-          </ScrollView>
+        <View style={{ width: 450 }}>
+          {data ? (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <ProjectList
+                projects={data}
+                onPress={setProject}
+                onPressEdit={(p) =>
+                  router.push({ pathname: "/", query: { id: p.id } })
+                }
+              />
+            </ScrollView>
+          ) : null}
+          {isLoading ? (
+            <ActivityIndicator style={{ marginTop: 32 }} size={"large"} />
+          ) : null}
         </View>
         <View style={{ width: 30 }} />
-        <View style={{paddingVertical: 30}}>
+        <View style={{ paddingVertical: 60 }}>
           <LivePreview project={selectedProject?.payload} />
         </View>
       </View>

@@ -13,26 +13,24 @@ const ProjectList: React.FC<Props> = ({ projects, onPress, onPressEdit }) => {
   return (
     <>
       {projects.map((project) => (
-        <React.Fragment key={project.id}>
+        <View style={{ paddingHorizontal: 16 }} key={project.id}>
+          <View style={{ height: 16 }} />
           <Card
+            style={{ borderRadius: 6 }}
             elevation={0}
-            style={{
-              borderRadius: 8,
-              backgroundColor: "rgba(0, 122, 255, 0.12)",
-              marginBottom: 16,
-            }}
             onPress={() => onPress(project)}
           >
             <Card.Title
               title={project.title}
-              subtitle={new Date(project.createdAt).toLocaleString()}
+              subtitle={`created: ${new Date(
+                project.createdAt
+              ).toLocaleString()}`}
             />
             <Card.Actions>
               <Button onPress={() => onPressEdit(project)}>Edit Project</Button>
             </Card.Actions>
           </Card>
-          <View style={{ height: 16 }} />
-        </React.Fragment>
+        </View>
       ))}
     </>
   );
