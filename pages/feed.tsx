@@ -90,7 +90,7 @@ const Feed = ({ data: initialData }: Props) => {
           ) : null}
         </View>
         <View style={{ width: 30 }} />
-        <View style={{ paddingVertical: 60 }}>
+        <View style={{ paddingBottom: 60, paddingTop: 16 }}>
           <LivePreview project={selectedProject?.payload} />
         </View>
       </View>

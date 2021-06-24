@@ -50,10 +50,6 @@ export default function App() {
 
   const { store, persistor } = useStore(preState);
 
-  if (loading) {
-    return <ActivityIndicator />;
-  }
-
   return (
     <ScrollView
       style={{ flex: 1 }}
@@ -63,7 +59,7 @@ export default function App() {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <PaperWrapper>
-            <Playground />
+            <Playground isLoading={loading} />
           </PaperWrapper>
         </PersistGate>
       </Provider>

@@ -12,6 +12,7 @@ import VLine from "./VLine";
 import ThemeInspector from "./theme/ThemeInspector";
 import DebugInspector from "./debug/DebugInspector";
 import dynamic from "next/dynamic";
+import { ActivityIndicator } from "react-native-paper";
 
 const LivePreview = dynamic(() => import("./LivePreview"), {
   ssr: false,
@@ -70,33 +71,37 @@ const PreviewContainer = () => {
   );
 };
 
-export default function Playground() {
+export default function Playground({ isLoading = false }) {
   return (
     <View style={{ flex: 1 }}>
       <Header />
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={{ flex: 1, padding: 16, backgroundColor: "#fafafa" }}>
-          <NavigatorList />
-        </View>
-        <VLine />
-        <View style={{ flex: 1, padding: 16 }}>
-          <InspectorContainer />
-        </View>
-        <VLine />
-        <View style={{ flex: 2 }}>
-          <PreviewContainer />
-          <View
-            style={{
-              height: 38,
-              backgroundColor: "lightgrey",
-              justifyContent: "center",
-              alignItems: "flex-end",
-            }}
-          >
-            <PreviewSwitch />
+      {isLoading ? (
+        <ActivityIndicator size={"large"} style={{marginTop: 16}} />
+      ) : (
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <View style={{ flex: 1, padding: 16, backgroundColor: "#fafafa" }}>
+            <NavigatorList />
+          </View>
+          <VLine />
+          <View style={{ flex: 1, padding: 16 }}>
+            <InspectorContainer />
+          </View>
+          <VLine />
+          <View style={{ flex: 2 }}>
+            <PreviewContainer />
+            <View
+              style={{
+                height: 38,
+                backgroundColor: "lightgrey",
+                justifyContent: "center",
+                alignItems: "flex-end",
+              }}
+            >
+              <PreviewSwitch />
+            </View>
           </View>
         </View>
-      </View>
+      )}
     </View>
   );
 }
