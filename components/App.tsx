@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useStore } from "../redux/store";
-import { ActivityIndicator } from "react-native-paper";
 import { ScrollView } from "react-native";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";

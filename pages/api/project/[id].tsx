@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getProjectById } from "../../../lib/supabase";
+import redis from "../../../lib/redis";
 
 export default async function projects(
   req: NextApiRequest,
@@ -10,14 +10,14 @@ export default async function projects(
   if (!id) {
     return res.status(404).json({
       error: {
-        code: 'not_found',
-        message: 'Not found'
-      }
+        code: "not_found",
+        message: "Not found",
+      },
     });
   }
 
   try {
-    const data = await getProjectById(id);
+    const data = JSON.parse((await redis.hget("projects", id)) || "null");
     res.status(200).json(data);
   } catch (e) {
     res.status(500).json({ error: e.message });

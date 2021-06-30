@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import supabase from "../../lib/supabase";
+import { v4 as uuidv4 } from "uuid";
+import { Project } from "../../lib/types";
+import redis from "../../lib/redis";
 
 export default async function addProject(
   req: NextApiRequest,
@@ -21,16 +23,17 @@ export default async function addProject(
     if (!title || !payload) {
       return res.status(400).json({ error: "missing values" });
     }
+    const id = uuidv4();
+    const newEntry: Project = {
+      id,
+      payload,
+      title,
+      createdAt: Date.now(),
+    };
 
-    let { data: project, error } = await supabase
-      .from("project")
-      .insert([{ title, payload }]);
+    await redis.hset("projects", id, JSON.stringify(newEntry));
 
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-
-    return res.status(200).json(project[0]);
+    return res.status(200).json(newEntry);
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }

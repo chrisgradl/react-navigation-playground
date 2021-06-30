@@ -1,13 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getProjects } from "../../lib/supabase";
+import redis from "../../lib/redis";
 
 export default async function projects(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const data = await getProjects();
-    return res.status(200).json(data);
+    const features = (await redis.hvals("projects"))
+      .map((entry) => JSON.parse(entry))
+      .sort((a, b) => b.createdAt - a.createdAt);
+    return res.status(200).json(features);
   } catch (e) {
     return res.status(500).json({ error: e });
   }
