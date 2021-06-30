@@ -30,11 +30,14 @@ function createImports(state: PlaygroundState) {
   `;
 }
 
-function createRootNavigation(children: string) {
-  return `export default function App() {
+function createRootNavigation(children: string, theme) {
+  return `
+    const theme = ${JSON.stringify(theme)}
+    
+    export default function App() {
     return (
       <SafeAreaProvider>
-          <NavigationContainer>
+          <NavigationContainer theme={theme}>
             ${children}
           </NavigationContainer>
       </SafeAreaProvider>
@@ -155,7 +158,7 @@ export const formatCode = async (code: string) => {
 };
 
 export default async function createCodeSnippet(state: PlaygroundState) {
-  const { navigators, rootId } = state;
+  const { navigators, rootId, theme } = state;
 
   const rootNavigatorComponentName =
     getNavigatorName(navigators[rootId].name) + "Component";
@@ -169,7 +172,7 @@ export default async function createCodeSnippet(state: PlaygroundState) {
     .map((navigator) => createNavigator(navigator, navigators))
     .join("\n")}
   
-  ${createRootNavigation(`<${rootNavigatorComponentName} />`)}
+  ${createRootNavigation(`<${rootNavigatorComponentName} />`, theme)}
   `;
 
   return formatCode(snippet);
