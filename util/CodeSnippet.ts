@@ -143,7 +143,7 @@ const createNavigator = (
   `;
 };
 
-export const formatCode = async (code: string) => {
+export const formatCode = (code: string) => {
   return Promise.all([
     require("prettier/standalone"),
     require("prettier/parser-babel"),

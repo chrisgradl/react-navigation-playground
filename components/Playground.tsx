@@ -76,7 +76,7 @@ export default function Playground({ isLoading = false }) {
     <View style={{ flex: 1 }}>
       <Header />
       {isLoading ? (
-        <ActivityIndicator size={"large"} style={{marginTop: 16}} />
+        <ActivityIndicator size={"large"} style={{ marginTop: 16 }} />
       ) : (
         <View style={{ flex: 1, flexDirection: "row" }}>
           <View style={{ flex: 1, padding: 16, backgroundColor: "#fafafa" }}>

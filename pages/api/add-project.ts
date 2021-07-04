@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
 import { Project } from "../../lib/types";
 import redis from "../../lib/redis";
+import { ProjectPost } from "../../components/CreateProjectButton";
+import createCodeSnippet from "../../util/CodeSnippet";
 
 export default async function addProject(
   req: NextApiRequest,
@@ -18,12 +20,17 @@ export default async function addProject(
 
   try {
     const { body } = req;
-    const { title, payload } = JSON.parse(body);
+    const { title, payload }: ProjectPost = JSON.parse(body);
 
     if (!title || !payload) {
       return res.status(400).json({ error: "missing values" });
     }
     const id = uuidv4();
+
+    const code = await createCodeSnippet(payload);
+
+    console.log(code)
+
     const newEntry: Project = {
       id,
       payload,
@@ -35,6 +42,7 @@ export default async function addProject(
 
     return res.status(200).json(newEntry);
   } catch (e) {
+    console.log(e)
     return res.status(500).json({ error: e.message });
   }
 }

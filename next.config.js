@@ -9,6 +9,20 @@ module.exports = withExpo(
   withFonts(
     withImages({
       projectRoot: __dirname,
+      async headers() {
+        return [
+          {
+            // Apply these headers to all routes in your application.
+            source: "/(.*)",
+            headers: [
+              {
+                key: "Content-Security-Policy",
+                value: "connect-src 'self';",
+              },
+            ],
+          },
+        ];
+      },
     })
   )
 );

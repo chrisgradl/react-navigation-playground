@@ -13,17 +13,22 @@ import { RootState, useAppSelector } from "../redux/store";
 import { View } from "react-native";
 import { useRouter } from "next/router";
 
-interface projectPost {
+export interface ProjectPost {
   title: string;
   payload: RootState;
 }
 
-async function createProject(data: projectPost) {
+async function createProject(data: ProjectPost) {
   const res = await fetch(`/api/add-project`, {
     method: "POST",
     body: JSON.stringify(data),
   });
-  return res.json();
+  if (res.ok) {
+    return res.json();
+  } else {
+    const error = await res.json();
+    throw new Error(`${res.status} ${error.error}`);
+  }
 }
 
 const CreateProjectButton: React.FC = () => {
@@ -54,7 +59,11 @@ const CreateProjectButton: React.FC = () => {
       </Button>
       <Portal>
         <Modal
-          onDismiss={() => setShow(false)}
+          onDismiss={() => {
+            setShow(false);
+            setError(null);
+            setTitle(null);
+          }}
           contentContainerStyle={{
             alignItems: "center",
             padding: 20,
@@ -67,7 +76,7 @@ const CreateProjectButton: React.FC = () => {
             style={{
               borderRadius: 6,
               width: 450,
-              height: 250,
+              minHeight: 250,
               backgroundColor: "white",
               padding: 16,
             }}
@@ -102,7 +111,9 @@ const CreateProjectButton: React.FC = () => {
             >
               Publish
             </Button>
-            {error ? <Subheading>{error}</Subheading> : null}
+            {error ? (
+              <Subheading style={{ height: 200 }}>{error}</Subheading>
+            ) : null}
           </Surface>
         </Modal>
       </Portal>
