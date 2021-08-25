@@ -7,61 +7,23 @@ import ScreenInspector from "./inspector/ScreenInspector";
 import Header from "./Header";
 import VLine from "./VLine";
 import ThemeInspector from "./theme/ThemeInspector";
-import dynamic from "next/dynamic";
 import { ActivityIndicator } from "react-native-paper";
-import { PlaygroundState } from "../types";
-import { createSelector } from "@reduxjs/toolkit";
-import { selectRootId } from "../redux/RootIdReducer";
-import { selectTheme } from "../redux/ThemeReducer";
 import PreviewContainer from "./PreviewContainer";
 
-
-const selectPlaygroundFromReduxState = createSelector(
-  [selectRootId, (state) => state.navigators, selectTheme],
-  (rootId, navigators, theme) => ({ rootId, navigators, theme })
-);
-
-const LivePreview = dynamic(() => import("./LivePreview"), {
-  ssr: false,
-});
-
-export function LivePreviewWrapper() {
-  const playgroundState = useAppSelector<PlaygroundState>(
-    selectPlaygroundFromReduxState
-  );
-
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-      }}
-    >
-      <LivePreview project={playgroundState} />
-    </View>
-  );
-}
-
-const InspectorSwitch = () => {
+const Content = () => {
   const inspector = useAppSelector((state) => state.inspector);
 
+  let content;
+
   if (inspector.type === "Navigator") {
-    return <Inspector />;
+    content = <Inspector />;
   } else if (inspector.type === "Screen") {
-    return <ScreenInspector />;
+    content = <ScreenInspector />;
   } else if (inspector.type === "Theme") {
-    return <ThemeInspector />;
+    content = <ThemeInspector />;
   }
 
-  return null;
-};
-
-const InspectorContainer = () => {
-  return (
-    <ScrollView>
-      <InspectorSwitch />
-    </ScrollView>
-  );
+  return <ScrollView>{content}</ScrollView>;
 };
 
 export default function Playground({ isLoading = false }) {
@@ -77,7 +39,7 @@ export default function Playground({ isLoading = false }) {
           </View>
           <VLine />
           <View style={{ flex: 1, padding: 16 }}>
-            <InspectorContainer />
+            <Content />
           </View>
           <VLine />
           <View style={{ flex: 2 }}>
