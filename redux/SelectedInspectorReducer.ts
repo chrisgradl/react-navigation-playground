@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-interface SelectedInspector {
+export interface SelectedInspector {
   type: "Screen" | "Navigator" | "Theme" | "Debug";
   navigatorId: string;
   screenId?: string;
@@ -21,6 +21,8 @@ const slice = createSlice({
 });
 
 export const { setSelectedInspector } = slice.actions;
+
+
 
 export const selectNavigator = (state: RootState) =>
   state.navigators[state.inspector.navigatorId];

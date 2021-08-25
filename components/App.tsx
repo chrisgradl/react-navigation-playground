@@ -36,8 +36,6 @@ export default function App() {
 
     if (id) {
       fetchData(id);
-    } else {
-      console.log("no id");
     }
 
     return () => {

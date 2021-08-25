@@ -4,22 +4,31 @@ import { useAppSelector } from "../redux/store";
 import NavigatorList from "./NavigatorList";
 import Inspector from "./inspector/Inspector";
 import ScreenInspector from "./inspector/ScreenInspector";
-import PreviewSwitch from "./PreviewSwitch";
-import { selectPreviewPanel } from "../redux/PreviewReducer";
-import CodePanel from "./CodePanel";
 import Header from "./Header";
 import VLine from "./VLine";
 import ThemeInspector from "./theme/ThemeInspector";
-import DebugInspector from "./debug/DebugInspector";
 import dynamic from "next/dynamic";
 import { ActivityIndicator } from "react-native-paper";
+import { PlaygroundState } from "../types";
+import { createSelector } from "@reduxjs/toolkit";
+import { selectRootId } from "../redux/RootIdReducer";
+import { selectTheme } from "../redux/ThemeReducer";
+import PreviewContainer from "./PreviewContainer";
+
+
+const selectPlaygroundFromReduxState = createSelector(
+  [selectRootId, (state) => state.navigators, selectTheme],
+  (rootId, navigators, theme) => ({ rootId, navigators, theme })
+);
 
 const LivePreview = dynamic(() => import("./LivePreview"), {
   ssr: false,
 });
 
 export function LivePreviewWrapper() {
-  const playgroundState = useAppSelector((state) => state);
+  const playgroundState = useAppSelector<PlaygroundState>(
+    selectPlaygroundFromReduxState
+  );
 
   return (
     <View
@@ -42,8 +51,6 @@ const InspectorSwitch = () => {
     return <ScreenInspector />;
   } else if (inspector.type === "Theme") {
     return <ThemeInspector />;
-  } else if (inspector.type === "Debug") {
-    return <DebugInspector />;
   }
 
   return null;
@@ -53,20 +60,6 @@ const InspectorContainer = () => {
   return (
     <ScrollView>
       <InspectorSwitch />
-    </ScrollView>
-  );
-};
-
-const PreviewContainer = () => {
-  const preview = useAppSelector(selectPreviewPanel);
-
-  return (
-    <ScrollView
-      contentContainerStyle={{
-        paddingVertical: 32,
-      }}
-    >
-      {preview === "Code" ? <CodePanel /> : <LivePreviewWrapper />}
     </ScrollView>
   );
 };
@@ -89,16 +82,6 @@ export default function Playground({ isLoading = false }) {
           <VLine />
           <View style={{ flex: 2 }}>
             <PreviewContainer />
-            <View
-              style={{
-                height: 38,
-                backgroundColor: "lightgrey",
-                justifyContent: "center",
-                alignItems: "flex-end",
-              }}
-            >
-              <PreviewSwitch />
-            </View>
           </View>
         </View>
       )}

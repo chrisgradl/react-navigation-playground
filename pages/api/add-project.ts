@@ -27,9 +27,7 @@ export default async function addProject(
     }
     const id = uuidv4();
 
-    const code = await createCodeSnippet(payload);
-
-    console.log(code)
+    await createCodeSnippet(payload);
 
     const newEntry: Project = {
       id,

@@ -15,7 +15,6 @@ import {
 import NavigationTypeItem from "./NavigationTypeItem";
 import { nanoid } from "nanoid";
 import TextWithEditFunction from "../TextWithEditFunction";
-import ThemeTemplateDropdown from "../theme/ThemeTemplateDropdown";
 
 const Inspector: React.FC = () => {
   const navigator = useAppSelector(selectNavigator);

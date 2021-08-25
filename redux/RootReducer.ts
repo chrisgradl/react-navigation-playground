@@ -3,7 +3,6 @@ import navigators from "./NavigatorReducer";
 import rootId from "./RootIdReducer";
 import inspector from "./SelectedInspectorReducer";
 import theme from "./ThemeReducer";
-import preview from "./PreviewReducer";
 import { loadProject } from "./LoadProjectAction";
 
 const reducers = combineReducers({
@@ -11,7 +10,6 @@ const reducers = combineReducers({
   rootId,
   inspector,
   theme,
-  preview,
 });
 
 const rootReducer = (state, action: PayloadAction<any>) => {
