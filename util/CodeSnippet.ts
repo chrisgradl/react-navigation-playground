@@ -52,6 +52,8 @@ function createRootNavigation(children: string, theme, expoExport?: boolean) {
     : "";
   const onNavigationStateChanged = !expoExport ? "onStateChange={onNavigationStateChanged}" : "";
 
+  const documentTitle = !expoExport ? "documentTitle={{enabled: false}}" : "";
+
   return `
     ${headerIconButton}
     const theme = ${JSON.stringify(theme)}
@@ -59,7 +61,7 @@ function createRootNavigation(children: string, theme, expoExport?: boolean) {
     export default function App() {
     return (
       <SafeAreaProvider>
-          <NavigationContainer ${initialState}  ${onNavigationStateChanged} theme={theme}>
+          <NavigationContainer ${documentTitle} ${initialState}  ${onNavigationStateChanged} theme={theme}>
             ${children}
           </NavigationContainer>
       </SafeAreaProvider>
