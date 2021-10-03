@@ -2,6 +2,8 @@ import * as babel from "@babel/standalone";
 
 const globalName = "__WORMHOLE__";
 
+let navState = null;
+
 const defaultGlobal = Object.freeze({
   require: (moduleId: string) => {
     if (moduleId === "react") {
@@ -23,7 +25,12 @@ const defaultGlobal = Object.freeze({
     }
     return null;
   },
+  onNavigationStateChanged: (state) => {
+    navState = state
+  },
 });
+
+export {navState}
 
 export default async function getCodeComponent(input: string) {
   const src = babel.transform(input, { presets: ["env", "react"] }).code;

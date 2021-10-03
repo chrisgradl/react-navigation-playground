@@ -35,6 +35,7 @@ export interface PlaygroundScreen {
   headerRight?: HeaderIcon;
   headerLeft?: HeaderIcon;
   headerShown?: boolean;
+  tabbarIcon?: HeaderIcon;
   /*screenOptions?:
     | StackNavigationOptions
     | BottomTabNavigationOptions

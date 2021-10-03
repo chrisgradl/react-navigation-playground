@@ -6,6 +6,7 @@ import {
   PlaygroundScreen,
   PlaygroundState,
 } from "../types";
+import { navState } from "./getCodeComponent";
 
 const SimplePage =
   "const SimplePage = () => <View><Text>Basic View</Text></View>";
@@ -24,20 +25,41 @@ function createImports(state: PlaygroundState) {
   return `import React from "react";
   import {View, Text} from "react-native";
   import {IconButton} from "react-native-paper";
-  import { NavigationContainer } from "@react-navigation/native";
+  import { NavigationContainer, useTheme } from "@react-navigation/native";
   import { SafeAreaProvider } from "react-native-safe-area-context";
   ${types.map((type) => importLinesForNavigatos[type]).join("\n")}
   `;
 }
 
-function createRootNavigation(children: string, theme) {
+const headerIconButton = `const HeaderIcon = (props) => {
+  const {colors} = useTheme()
+
+  const {text} = colors
+
+  return (
+      <IconButton
+          color={text}
+          {...props}
+  />
+)
+}
+`
+
+
+function createRootNavigation(children: string, theme, expoExport?: boolean) {
+  const initialState = !expoExport
+    ? `initialState={${JSON.stringify(navState)}}`
+    : "";
+  const onNavigationStateChanged = !expoExport ? "onStateChange={onNavigationStateChanged}" : "";
+
   return `
+    ${headerIconButton}
     const theme = ${JSON.stringify(theme)}
     
     export default function App() {
     return (
       <SafeAreaProvider>
-          <NavigationContainer theme={theme}>
+          <NavigationContainer ${initialState}  ${onNavigationStateChanged} theme={theme}>
             ${children}
           </NavigationContainer>
       </SafeAreaProvider>
@@ -85,7 +107,7 @@ const createNavigator = (
     icon,
     payload,
     action,
-  }: HeaderIcon) => `() =>  <IconButton
+  }: HeaderIcon) => `() =>  <HeaderIcon
                       icon={"${icon}"}
                       onPress={() => {
                           ${
@@ -101,9 +123,14 @@ const createNavigator = (
     headerShown,
     headerLeft,
     headerRight,
+    tabbarIcon,
   }: PlaygroundScreen) => {
-    if (type === PlaygroundNavigatorType.Stack) {
-      return `options={({navigation}) => ({
+    return `options={({navigation}) => ({
+        ${
+          tabbarIcon?.icon
+            ? `tabBarIcon: props => <HeaderIcon icon={"${tabbarIcon.icon}"}/>,`
+            : ""
+        }
         headerShown: ${Boolean(headerShown)}, 
         ${
           headerLeft
@@ -116,9 +143,6 @@ const createNavigator = (
             : ""
         }
       })}`;
-    } else {
-      return "";
-    }
   };
 
   return `
@@ -157,7 +181,10 @@ export const formatCode = (code: string) => {
   );
 };
 
-export default async function createCodeSnippet(state: PlaygroundState) {
+export default async function createCodeSnippet(
+  state: PlaygroundState,
+  expoExport?: boolean
+) {
   const { navigators, rootId, theme } = state;
 
   const rootNavigatorComponentName =
@@ -172,7 +199,9 @@ export default async function createCodeSnippet(state: PlaygroundState) {
     .map((navigator) => createNavigator(navigator, navigators))
     .join("\n")}
   
-  ${createRootNavigation(`<${rootNavigatorComponentName} />`, theme)}
+  ${
+    createRootNavigation(`<${rootNavigatorComponentName} />`, theme, expoExport)
+  }
   `;
 
   return formatCode(snippet);

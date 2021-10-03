@@ -27,7 +27,7 @@ const ExportToSnack: React.FC<Props> = () => {
 
   const openSnack = async () => {
     setLoading(true);
-    const code = await createCodeSnippet(state);
+    const code = await createCodeSnippet(state, true);
     const files = {
       "App.js": {
         type: "CODE",
@@ -50,7 +50,7 @@ const ExportToSnack: React.FC<Props> = () => {
       <input type="hidden" name="name" value="React-Navigation Playground" />
       <input type="hidden" name="dependencies" value={dependencies} />
       <input ref={codeInputRef} type="hidden" name="files" value={undefined} />
-      <input type="hidden" name="sdkVersion" value="40.0.0" />
+      <input type="hidden" name="sdkVersion" value="latest" />
       <Button
         color={"white"}
         icon={"open-in-new"}

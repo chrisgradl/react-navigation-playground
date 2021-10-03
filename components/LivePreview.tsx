@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import createCodeSnippet from "../util/CodeSnippet";
 import getCodeComponent from "../util/getCodeComponent";
 import { ActivityIndicator, Paragraph } from "react-native-paper";
+import { PlaygroundState } from "../types";
 
-export default function LivePreview({ project }) {
+export function useCreateComponentFromState(project: PlaygroundState) {
   const [Component, setComponent] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -15,7 +16,7 @@ export default function LivePreview({ project }) {
       setError(null);
       setLoading(true);
       try {
-        const code = await createCodeSnippet(project);
+        const code = await createCodeSnippet(project, false);
         const comp = await getCodeComponent(code);
         setComponent(() => comp);
       } catch (e) {
@@ -27,6 +28,13 @@ export default function LivePreview({ project }) {
     };
     loadComponent();
   }, [project]);
+
+  return { Component, error, loading };
+}
+
+export default function LivePreview({ project }) {
+
+  const {error, loading, Component} = useCreateComponentFromState(project)
 
   if (error) {
     return <Paragraph style={{ padding: 16 }}>{error}</Paragraph>;

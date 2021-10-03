@@ -13,7 +13,7 @@ const CodePanel: React.FC = () => {
   useEffect(() => {
     const getCode = async () => {
       try {
-        const code = await createCodeSnippet(components);
+        const code = await createCodeSnippet(components, false);
         setCode(code);
       } catch (e) {
         setError("Failed to generate Codesnippet: "+ e.message + "\n " + e.stack);

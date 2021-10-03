@@ -14,9 +14,15 @@ interface Props {
   label: string;
   value: HeaderIcon;
   onValueChange(value: HeaderIcon): void;
+  isIconPickerHeader?: boolean;
 }
 
-const IconPicker: React.FC<Props> = ({ onValueChange, value, label }) => {
+const IconPicker: React.FC<Props> = ({
+  onValueChange,
+  value,
+  label,
+  isIconPickerHeader = false,
+}) => {
   const [show, setShowModal] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [filterTerm, setFilterTerm] = useState<string>(undefined);
@@ -103,27 +109,31 @@ const IconPicker: React.FC<Props> = ({ onValueChange, value, label }) => {
             {icon || "No Icon Selected"}
           </Button>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Subheading>Action</Subheading>
-          <Button
-            onPress={() =>
-              onValueChange({
-                ...value,
-                action:
-                  value.action === "toggleDrawer" ? "navigate" : "toggleDrawer",
-              })
-            }
-            contentStyle={{ justifyContent: "flex-start" }}
+        {!isIconPickerHeader && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
           >
-            {action}
-          </Button>
-        </View>
+            <Subheading>Action</Subheading>
+            <Button
+              onPress={() =>
+                onValueChange({
+                  ...value,
+                  action:
+                    value.action === "toggleDrawer"
+                      ? "navigate"
+                      : "toggleDrawer",
+                })
+              }
+              contentStyle={{ justifyContent: "flex-start" }}
+            >
+              {action}
+            </Button>
+          </View>
+        )}
         {action === "navigate" && (
           <View
             style={{

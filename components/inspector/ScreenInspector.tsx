@@ -9,6 +9,7 @@ import { selectScreen } from "../../redux/SelectedInspectorReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 import TextWithEditFunction from "../TextWithEditFunction";
 import StackScreenOptionsInspector from "./StackScreenOptionsInspector";
+import IconPicker from "../IconPicker";
 
 const ScreenInspector: React.FC = () => {
   const screen = useAppSelector(selectScreen);
@@ -81,9 +82,23 @@ const ScreenInspector: React.FC = () => {
         )}
       </InspectorItem>
       <InspectorItemSpace />
-      {navigator.type === PlaygroundNavigatorType.Stack ? (
-        <StackScreenOptionsInspector screen={screen} editScreen={editScreen} />
+
+      {navigator.type === PlaygroundNavigatorType.Tab ? (
+        <>
+          <IconPicker
+            label={"Tab Icon"}
+            value={screen?.tabbarIcon}
+            onValueChange={(value) =>
+              editScreen({
+                tabbarIcon: value,
+              })
+            }
+          />
+          <InspectorItemSpace />
+        </>
       ) : null}
+
+      <StackScreenOptionsInspector screen={screen} editScreen={editScreen} />
       <InspectorItemSpace />
     </View>
   );
