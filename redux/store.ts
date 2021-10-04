@@ -12,7 +12,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "./RootReducer";
-import { TemplateTabs } from "../Templates";
+import { TemplateTabs } from "./Templates";
 import { useMemo } from "react";
 import hardSet from "redux-persist/es/stateReconciler/hardSet";
 import window from "@react-navigation/native/src/__mocks__/window";

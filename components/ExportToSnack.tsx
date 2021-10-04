@@ -16,7 +16,7 @@ const dependencies = [
   "react-native-safe-area-context",
   "@react-native-community/masked-view",
   "react-native-paper",
-  "@expo/vector-icons"
+  "@expo/vector-icons",
 ];
 
 const ExportToSnack: React.FC<Props> = () => {
@@ -27,22 +27,29 @@ const ExportToSnack: React.FC<Props> = () => {
 
   const openSnack = async () => {
     setLoading(true);
-    const code = await createCodeSnippet(state, true);
-    const files = {
-      "App.js": {
-        type: "CODE",
-        contents: code,
-      },
-    };
-    codeInputRef.current.value = JSON.stringify(files);
-    formRef.current.submit();
-    setLoading(false);
+    try {
+      const code = await createCodeSnippet(state, true);
+
+      const files = {
+        "App.js": {
+          type: "CODE",
+          contents: code,
+        },
+      };
+
+      codeInputRef.current.value = JSON.stringify(files);
+      formRef.current.submit();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <form
       ref={formRef}
-      action="https://snack.expo.io"
+      action="https://snack.expo.dev"
       method="POST"
       target="_blank"
     >
@@ -50,7 +57,7 @@ const ExportToSnack: React.FC<Props> = () => {
       <input type="hidden" name="name" value="React-Navigation Playground" />
       <input type="hidden" name="dependencies" value={dependencies} />
       <input ref={codeInputRef} type="hidden" name="files" value={undefined} />
-      <input type="hidden" name="sdkVersion" value="latest" />
+      <input type="hidden" name="sdkVersion" value="42.0.0" />
       <Button
         color={"white"}
         icon={"open-in-new"}

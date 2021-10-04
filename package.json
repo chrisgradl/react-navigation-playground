@@ -55,6 +55,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@expo/next-adapter": "^3.0.1",
+    "@types/ioredis": "^4.27.5",
     "@types/jest": "^26.0.22",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",

@@ -1,5 +1,5 @@
 import createCodeSnippet from "../CodeSnippet";
-import { TemplateTabs } from "../../Templates";
+import { TemplateTabs } from "../../redux/Templates";
 
 const state = {
   navigators: {
