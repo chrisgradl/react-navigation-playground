@@ -36,7 +36,7 @@ export function makeStore(preloadedState: any = TemplateTabs) {
 export function useStore(initialState) {
   const store = useMemo(() => {
     const createdStore = makeStore(initialState);
-    const persistor = persistStore(createdStore, {});
+    const persistor = persistStore(createdStore);
 
     if (initialState) {
       //delete persisted store when a project is loaded from the feed
