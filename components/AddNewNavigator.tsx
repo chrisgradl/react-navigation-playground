@@ -1,10 +1,9 @@
 import React from "react";
 import {Button, IconButton, List} from "react-native-paper";
 import { addNavigator } from "../redux/NavigatorReducer";
-import { useAppDispatch } from "../redux/store";
 import { nanoid } from "nanoid";
 import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
-import { View } from "react-native";
+import { View } from "react-native"; import {useAppDispatch} from "../redux/types";
 
 // <Button
 //     icon={"plus"}

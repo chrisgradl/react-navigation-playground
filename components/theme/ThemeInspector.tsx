@@ -1,11 +1,10 @@
 import React from "react";
 import {View} from "react-native";
-import {useAppDispatch, useAppSelector} from "../../redux/store";
 import InspectorItem, {InspectorItemSpace} from "../inspector/InspectorItem";
 import ThemeTemplateDropdown from "./ThemeTemplateDropdown";
 import {setThemeColor} from "../../redux/ThemeReducer";
 import {Title} from "react-native-paper";
-import {ColorItem} from "./ColorItem";
+import {ColorItem} from "./ColorItem"; import {useAppDispatch, useAppSelector} from "../../redux/types";
 
 
 const ThemeInspector: React.FC = () => {

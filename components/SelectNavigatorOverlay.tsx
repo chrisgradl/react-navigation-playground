@@ -1,8 +1,7 @@
 import React from "react";
 import Overlay from "./Overlay";
-import { useAppSelector } from "../redux/store";
 import { List, Title } from "react-native-paper";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native"; import {useAppSelector} from "../redux/types";
 
 interface Props {
   onDismiss();

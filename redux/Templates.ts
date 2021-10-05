@@ -108,7 +108,6 @@ export const TemplateTabs = {
     },
     animation: { scale: 1 },
   },
-  _persist: { version: -1, rehydrated: true },
 };
 
 export const TemplateDrawer = {
@@ -214,7 +213,6 @@ export const TemplateDrawer = {
     },
     animation: { scale: 1 },
   },
-  _persist: { version: -1, rehydrated: true },
 };
 
 const Projects = {

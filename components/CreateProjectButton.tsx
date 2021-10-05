@@ -9,9 +9,8 @@ import {
   TextInput,
   Title,
 } from "react-native-paper";
-import { RootState, useAppSelector } from "../redux/store";
 import { View } from "react-native";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"; import {RootState, useAppSelector} from "../redux/types";
 
 export interface ProjectPost {
   title: string;

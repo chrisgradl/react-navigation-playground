@@ -1,6 +1,5 @@
 import React from "react";
 import { View } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
 import {
   addScreen,
   editNavigator,
@@ -14,7 +13,7 @@ import {
 } from "../../redux/SelectedInspectorReducer";
 import NavigationTypeItem from "./NavigationTypeItem";
 import { nanoid } from "nanoid";
-import TextWithEditFunction from "../TextWithEditFunction";
+import TextWithEditFunction from "../TextWithEditFunction"; import {useAppDispatch, useAppSelector} from "../../redux/types";
 
 const Inspector: React.FC = () => {
   const navigator = useAppSelector(selectNavigator);

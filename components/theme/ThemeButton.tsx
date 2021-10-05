@@ -1,7 +1,6 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setSelectedInspector } from "../../redux/SelectedInspectorReducer";
-import MenuButton from "../MenuButton";
+import MenuButton from "../MenuButton"; import {useAppDispatch, useAppSelector} from "../../redux/types";
 
 const ThemeButton: React.FC = () => {
   const { type } = useAppSelector((state) => state.inspector);

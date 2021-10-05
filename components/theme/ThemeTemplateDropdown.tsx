@@ -1,8 +1,7 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectTheme, setTheme } from "../../redux/ThemeReducer";
 import { IconButton, Menu, Subheading, Switch } from "react-native-paper";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native"; import {useAppDispatch, useAppSelector} from "../../redux/types";
 
 const ThemeTemplateDropdown: React.FC = () => {
   const dispatch = useAppDispatch();

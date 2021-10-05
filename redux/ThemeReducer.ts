@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
 import {
   CombinedDarkTheme,
   CombinedDefaultTheme, Margherita,
 
-} from "../Themes";
+} from "../Themes"; import {RootState} from "./types";
 
 export type ThemeType = "default" | "dark" | "margherita";
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { useAppSelector } from "../redux/store";
 import createCodeSnippet from "../util/CodeSnippet";
 import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from "prism-react-renderer/themes/vsLight";
+import theme from "prism-react-renderer/themes/vsLight"; import {useAppSelector} from "../redux/types";
 
 const CodePanel: React.FC = () => {
   const components = useAppSelector((state) => state);

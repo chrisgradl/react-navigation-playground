@@ -6,8 +6,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { selectRootId } from "../redux/RootIdReducer";
 import { selectTheme } from "../redux/ThemeReducer";
 import dynamic from "next/dynamic";
-import { useAppSelector } from "../redux/store";
-import { PlaygroundState } from "../types";
+import { PlaygroundState } from "../types"; import {useAppSelector} from "../redux/types";
 
 const selectPlaygroundFromReduxState = createSelector(
   [selectRootId, (state) => state.navigators, selectTheme],

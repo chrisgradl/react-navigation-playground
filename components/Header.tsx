@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Appbar, Button, Menu } from "react-native-paper";
 import ExportToSnack from "./ExportToSnack";
-import { useAppDispatch } from "../redux/store";
 import {
   loadDrawerTemplate,
   loadTabsTemplate,
   resetState,
 } from "../redux/LoadProjectAction";
 import CreateProjectButton from "./CreateProjectButton";
-import {useRouter} from "next/router";
+import {useRouter} from "next/router"; import {useAppDispatch} from "../redux/types";
 
 const Header = () => {
   const [menu, showMenu] = useState(false);
