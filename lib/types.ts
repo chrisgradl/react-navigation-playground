@@ -4,5 +4,5 @@ export interface Project {
   id: string;
   createdAt: number;
   title: string;
-  payload: RootState;
+  payload: Omit<RootState, "_persist">;
 }

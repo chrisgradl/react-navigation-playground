@@ -1,16 +1,23 @@
-import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE,} from "redux-persist";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import {useMemo} from "react";
-import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
+import { useMemo } from "react";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import rootReducer from "./RootReducer";
-import {TemplateTabs} from "./Templates";
-import {PersistConfig} from "redux-persist/es/types";
+import { TemplateTabs } from "./Templates";
 
-const persistConfig: PersistConfig<any> = {
+const persistConfig = {
   key: "root",
   storage,
   timeout: 200,
-
 };
 
 export function makeStore(preloadedState: any = TemplateTabs) {
@@ -26,10 +33,8 @@ export function makeStore(preloadedState: any = TemplateTabs) {
   });
 }
 
-
 export function useStore(initialState) {
   const store = useMemo(() => {
-
     const createdStore = makeStore(initialState);
     const persistor = persistStore(createdStore, {});
 

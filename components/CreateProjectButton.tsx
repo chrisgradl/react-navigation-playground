@@ -10,11 +10,12 @@ import {
   Title,
 } from "react-native-paper";
 import { View } from "react-native";
-import { useRouter } from "next/router"; import {RootState, useAppSelector} from "../redux/types";
+import { useRouter } from "next/router";
+import { RootState, useAppSelector } from "../redux/types";
 
 export interface ProjectPost {
   title: string;
-  payload: RootState;
+  payload: Omit<RootState, "_persist">;
 }
 
 async function createProject(data: ProjectPost) {
@@ -35,14 +36,19 @@ const CreateProjectButton: React.FC = () => {
   const [title, setTitle] = useState<string | null>();
   const router = useRouter();
 
-  const payload = useAppSelector((state) => state);
+  const {   _persist, ...payload } = useAppSelector(
+    (state) => state
+  );
 
   const [error, setError] = useState();
 
   const onPressPublish = async () => {
     setError(undefined);
     try {
-      const res = await createProject({ title, payload });
+      const res = await createProject({
+        title,
+        payload,
+      });
       if (res) {
         router.push({ pathname: "/feed", query: { id: res.id } });
       }
