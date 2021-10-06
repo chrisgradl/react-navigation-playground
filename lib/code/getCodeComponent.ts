@@ -1,7 +1,13 @@
 import * as babel from "@babel/standalone";
 
+
+// code is almost exactly reused from https://github.com/cawfree/react-native-wormhole
+
 const globalName = "__WORMHOLE__";
 
+
+//we store the navigation state of the generated preview in this variable
+//the navState is used in the CodeSnippet to set the initial state of the navigation container to persist the current state when the Component is refreshed
 let navState = null;
 
 const defaultGlobal = Object.freeze({
@@ -30,8 +36,6 @@ const defaultGlobal = Object.freeze({
   },
 });
 
-export {navState}
-
 export default async function getCodeComponent(input: string) {
   const src = babel.transform(input, { presets: ["env", "react"] }).code;
   const srcWithImports = `${Object.keys(defaultGlobal)
@@ -49,3 +53,5 @@ export default async function getCodeComponent(input: string) {
   }
   return Component;
 }
+
+export {navState}

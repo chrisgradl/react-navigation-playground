@@ -14,7 +14,9 @@ const MenuButton: React.FC<Props> = ({ selected, onPress, icon, title }) => {
     <View
       style={{
         borderRadius: 8,
-        backgroundColor: "rgba(0, 122, 255, 0.12)",
+        backgroundColor: selected
+          ? "rgba(0, 122, 255, 0.2)"
+          : "rgba(0, 122, 255, 0.1)",
         marginBottom: 16,
       }}
     >
