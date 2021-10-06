@@ -37,6 +37,7 @@ export function createImports(state: PlaygroundState) {
   import {IconButton} from "react-native-paper";
   import { NavigationContainer, useTheme } from "@react-navigation/native";
   import { SafeAreaProvider } from "react-native-safe-area-context";
+  import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
   ${types.map((type) => importLinesForNavigators[type]).join("\n")}
   `;
 }
@@ -81,7 +82,7 @@ export const getScreenOptions = ({
   return `options={({navigation}) => ({
         ${
           tabbarIcon?.icon
-            ? `tabBarIcon: props => <HeaderIcon icon={"${tabbarIcon.icon}"}/>,`
+            ? `tabBarIcon: (props) => <Icon {...props} name={"${tabbarIcon.icon}"} />,`
             : ""
         }
         headerShown: ${Boolean(headerShown)}, 

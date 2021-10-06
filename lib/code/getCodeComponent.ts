@@ -28,6 +28,8 @@ const defaultGlobal = Object.freeze({
       return require("@react-navigation/stack");
     } else if (moduleId === "@react-navigation/bottom-tabs") {
       return require("@react-navigation/bottom-tabs");
+    } else if (moduleId === "@expo/vector-icons") {
+      return require("@expo/vector-icons");
     }
     return null;
   },
