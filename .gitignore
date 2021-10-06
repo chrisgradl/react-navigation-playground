@@ -17,6 +17,7 @@ web-build/
 
 # @generated: @expo/next-adapter@2.1.77
 /.expo/*
+/.expo-shared/*
 # Expo Web
 /web-build/*
 # Expo Native
