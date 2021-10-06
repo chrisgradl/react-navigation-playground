@@ -10,7 +10,6 @@ import { customAlphabet } from "nanoid";
 
 const createNameId = customAlphabet("0123456789", 4);
 
-
 const slice = createSlice({
   name: "NavigatorReducer",
   initialState: {} as NavigatorRecord,
@@ -23,6 +22,7 @@ const slice = createSlice({
         type: PlaygroundNavigatorType.Stack,
         id,
         screens: {},
+        tabBarShowLabel: true,
       };
     },
     deleteNavigator: (state, action: PayloadAction<string>) => {

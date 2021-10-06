@@ -1,10 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import {
-  addScreen,
-  editNavigator,
-} from "../../redux/NavigatorReducer";
-import { Button, Checkbox, Title } from "react-native-paper";
+import { addScreen, editNavigator } from "../../redux/NavigatorReducer";
+import { Button, Caption, Checkbox, Title } from "react-native-paper";
 import { selectRootId, setRootId } from "../../redux/RootIdReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 import {
@@ -13,9 +10,10 @@ import {
 } from "../../redux/SelectedInspectorReducer";
 import NavigationTypeItem from "./NavigationTypeItem";
 import { nanoid } from "nanoid";
-import TextWithEditFunction from "../TextWithEditFunction"; import {useAppDispatch, useAppSelector} from "../../redux/types";
+import TextWithEditFunction from "../misc/TextWithEditFunction";
+import { useAppDispatch, useAppSelector } from "../../redux/types";
 
-const Inspector: React.FC = () => {
+const NavigatorInspector: React.FC = () => {
   const navigator = useAppSelector(selectNavigator);
 
   const rootID = useAppSelector(selectRootId);
@@ -54,6 +52,24 @@ const Inspector: React.FC = () => {
         value={navigator.type}
       />
       <InspectorItemSpace />
+
+      <InspectorItem>
+        <Checkbox.Item
+          onPress={() =>
+            dispatch(
+              editNavigator({
+                id,
+                data: { tabBarShowLabel: !navigator.tabBarShowLabel },
+              })
+            )
+          }
+          label="tabBarShowLabel"
+          status={navigator.tabBarShowLabel ? "checked" : "unchecked"}
+
+        />
+      </InspectorItem>
+
+      <InspectorItemSpace />
       <Button
         mode={"contained"}
         icon={"plus"}
@@ -72,4 +88,4 @@ const Inspector: React.FC = () => {
   );
 };
 
-export default Inspector;
+export default NavigatorInspector;

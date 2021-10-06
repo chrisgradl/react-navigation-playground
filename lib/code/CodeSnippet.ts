@@ -5,7 +5,7 @@ import {
   PlaygroundNavigatorType,
   PlaygroundScreen,
   PlaygroundState,
-} from "../types";
+} from "../../types";
 import { navState } from "./getCodeComponent";
 
 const SimplePage =
@@ -85,7 +85,7 @@ const createNavigatorConst = (name, type) => {
 };
 
 const createNavigator = (
-  { name, type, screens }: PlaygroundNavigator,
+  { name, type, screens, tabBarShowLabel }: PlaygroundNavigator,
   navigators: NavigatorRecord
 ) => {
   const navigatorName = getNavigatorName(name);
@@ -152,7 +152,7 @@ const createNavigator = (
     
     function ${componentName} () {
         return (
-            <${navigatorName}.Navigator>
+            <${navigatorName}.Navigator screenOptions={{tabBarShowLabel: ${tabBarShowLabel}}}>
                 ${Object.values(screens)
                   .map(
                     (screen) =>

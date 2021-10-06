@@ -1,4 +1,5 @@
-import { CombinedDarkTheme, CombinedDefaultTheme } from "./Themes";
+import {CombinedDarkTheme, CombinedDefaultTheme} from "./data/Themes";
+import {RootState} from "./redux/types";
 
 export enum PlaygroundNavigatorType {
   Stack = "Stack",
@@ -9,9 +10,9 @@ export enum PlaygroundNavigatorType {
 export interface PlaygroundNavigator {
   id: string;
   type: PlaygroundNavigatorType;
-  //navigatorProps?: StackNavigatorProps | BottomTabNavigatorProps | DrawerProps;
   screens?: Record<string, PlaygroundScreen>;
   name: string;
+  tabBarShowLabel?: boolean;
 }
 
 export enum ComponentType {
@@ -36,6 +37,7 @@ export interface PlaygroundScreen {
   headerLeft?: HeaderIcon;
   headerShown?: boolean;
   tabbarIcon?: HeaderIcon;
+
   /*screenOptions?:
     | StackNavigationOptions
     | BottomTabNavigationOptions
@@ -48,4 +50,16 @@ export interface PlaygroundState {
   rootId: string;
   navigators: NavigatorRecord;
   theme: typeof CombinedDarkTheme | typeof CombinedDefaultTheme;
+}
+
+export interface Project {
+  id: string;
+  createdAt: number;
+  title: string;
+  payload: Omit<RootState, "_persist">;
+}
+
+export interface ProjectPost {
+  title: string;
+  payload: Omit<RootState, "_persist">;
 }

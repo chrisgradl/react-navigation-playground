@@ -1,7 +1,7 @@
 import React from "react";
-import { View } from "react-native";
-import { Project } from "../lib/types";
+import { ScrollView, View } from "react-native";
 import { Button, Card } from "react-native-paper";
+import { Project } from "../../types";
 
 interface Props {
   projects: Project[];
@@ -11,15 +11,10 @@ interface Props {
 
 const ProjectList: React.FC<Props> = ({ projects, onPress, onPressEdit }) => {
   return (
-    <>
-      {projects.map((project) => (
-        <View style={{ paddingHorizontal: 16 }} key={project.id}>
-          <View style={{ height: 16 }} />
-          <Card
-            style={{ borderRadius: 6 }}
-            elevation={0}
-            onPress={() => onPress(project)}
-          >
+    <ScrollView showsVerticalScrollIndicator={false}>
+      {projects?.map((project) => (
+        <View style={{ paddingVertical: 8 }} key={project.id}>
+          <Card elevation={0} onPress={() => onPress(project)}>
             <Card.Title
               title={project.title}
               subtitle={`created: ${new Date(
@@ -32,7 +27,7 @@ const ProjectList: React.FC<Props> = ({ projects, onPress, onPressEdit }) => {
           </Card>
         </View>
       ))}
-    </>
+    </ScrollView>
   );
 };
 

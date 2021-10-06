@@ -1,118 +1,69 @@
-import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
-import useSWR from "swr";
-import {
-  ActivityIndicator,
-  Button,
-  Card,
-  IconButton,
-  Title,
-} from "react-native-paper";
-import { Project } from "../lib/types";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Paragraph } from "react-native-paper";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import ProjectList from "../components/ProjectList";
+import ProjectList from "../components/feed/ProjectList";
+import { FeedHeader } from "../components/header/Header";
+import { useProjectFeed } from "../lib/useProjectFeed";
 
-const LivePreview = dynamic(() => import("../components/LivePreview"), {
+const LivePreview = dynamic(() => import("../components/preview/LivePreview"), {
   ssr: false,
   loading: () => <View style={{ width: 400 }} />,
 });
 
-interface Props {
-  data: Project[];
-}
-
-const Feed = ({ data: initialData }: Props) => {
+const Feed = () => {
   const router = useRouter();
-
   const { id } = router.query;
-
-  const { data, error } = useSWR<Project[]>("/api/latest-projects", {
-    initialData,
-    onSuccess: (data) => {
-      if (data.length > 0 && !selectedProject) {
-        if (id) {
-          history.replaceState(null, null, "/feed");
-          const project = data.find((p) => p.id === id);
-          if (project) {
-            setProject(project);
-            return;
-          }
-        }
-
-        setProject(data[0]);
-      }
-    },
-  });
-
-  const [selectedProject, setProject] = useState<Project>();
-
-  const isLoading = !data && !error;
-
-  if (error) {
-    return <Title>Error... {error.message}</Title>;
-  }
+  const {
+    setProject,
+    data,
+    isLoading,
+    error,
+    selectedProject,
+  } = useProjectFeed({ id });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#eaeaea" }}>
-      <View
-        style={{
-          alignItems: "center",
-          backgroundColor: "white",
-          paddingVertical: 8,
-          borderColor: "lightgrey",
-          borderBottomWidth: 0.3,
-        }}
+    <View style={styles.pageContainer}>
+      <FeedHeader />
+      <ScrollView
+        horizontal={true}
+        contentContainerStyle={styles.scrollContainer}
       >
-        <Title style={{ fontSize: 24 }}>Published Navigations</Title>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        <View style={{ width: 450 }}>
-          {data ? (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <ProjectList
-                projects={data}
-                onPress={setProject}
-                onPressEdit={(p) =>
-                  router.push({ pathname: "/", query: { id: p.id } })
-                }
-              />
-            </ScrollView>
-          ) : null}
+        <View style={styles.listContainer}>
           {isLoading ? (
             <ActivityIndicator style={{ marginTop: 32 }} size={"large"} />
           ) : null}
+          {error ? <Paragraph>Error... {error.message}</Paragraph> : null}
+          <ProjectList
+            projects={data}
+            onPress={setProject}
+            onPressEdit={(p) =>
+              router.push({ pathname: "/", query: { id: p.id } })
+            }
+          />
         </View>
-        <View style={{ width: 30 }} />
-        <View style={{ paddingBottom: 60, paddingTop: 16 }}>
-          {selectedProject?.payload ? (
-            <LivePreview project={selectedProject?.payload} />
-          ) : null}
+        <View style={styles.previewContainer}>
+          <LivePreview project={selectedProject?.payload} />
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
 
-// export const getStaticProps: GetStaticProps<Props> = async () => {
-//   const data = await getProjects();
-//
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-//
-//   return {
-//     revalidate: 60,
-//     props: { data },
-//   };
-// };
+const styles = StyleSheet.create({
+  pageContainer: {
+    flex: 1,
+    backgroundColor: "#eaeaea",
+  },
+  scrollContainer: {
+    flexDirection: "row",
+    flex: 1,
+    minWidth: 1000,
+    justifyContent: "center",
+  },
+  listContainer: { width: 450, paddingHorizontal: 32 },
+  previewContainer: { justifyContent: "center", paddingVertical: 32 },
+});
 
 export default Feed;

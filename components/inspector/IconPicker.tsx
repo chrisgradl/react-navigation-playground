@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { Button, IconButton, Searchbar, Subheading } from "react-native-paper";
-import Overlay from "./Overlay";
-import InspectorItem from "./inspector/InspectorItem";
-import { HeaderIcon } from "../types";
+import Overlay from "../misc/Overlay";
+import InspectorItem from "./InspectorItem";
+import { HeaderIcon } from "../../types";
 import SelectNavigatorOverlay from "./SelectNavigatorOverlay";
 
 export const iconList = Object.keys(

@@ -3,10 +3,11 @@ import { ScrollView, View } from "react-native";
 import PreviewSwitch, { PreviewPanel } from "./PreviewSwitch";
 import CodePanel from "./CodePanel";
 import { createSelector } from "@reduxjs/toolkit";
-import { selectRootId } from "../redux/RootIdReducer";
-import { selectTheme } from "../redux/ThemeReducer";
+import { selectRootId } from "../../redux/RootIdReducer";
+import { selectTheme } from "../../redux/ThemeReducer";
 import dynamic from "next/dynamic";
-import { PlaygroundState } from "../types"; import {useAppSelector} from "../redux/types";
+import { PlaygroundState } from "../../types";
+import { useAppSelector } from "../../redux/types";
 
 const selectPlaygroundFromReduxState = createSelector(
   [selectRootId, (state) => state.navigators, selectTheme],
@@ -36,7 +37,6 @@ function LivePreviewWrapper() {
 
 const PreviewContainer = () => {
   const [preview, setPreview] = React.useState<PreviewPanel>("UI");
-
   return (
     <>
       <ScrollView

@@ -11,41 +11,22 @@ import {
 } from "react-native-paper";
 import { View } from "react-native";
 import { useRouter } from "next/router";
-import { RootState, useAppSelector } from "../redux/types";
+import { useAppSelector } from "../../redux/types";
+import { addProjectToFeed } from "../../lib/addProjectToFeed";
 
-export interface ProjectPost {
-  title: string;
-  payload: Omit<RootState, "_persist">;
-}
-
-async function createProject(data: ProjectPost) {
-  const res = await fetch(`/api/add-project`, {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-  if (res.ok) {
-    return res.json();
-  } else {
-    const error = await res.json();
-    throw new Error(`${res.status} ${error.error}`);
-  }
-}
-
-const CreateProjectButton: React.FC = () => {
+const AddProjectToFeed: React.FC = () => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState<string | null>();
   const router = useRouter();
 
-  const {   _persist, ...payload } = useAppSelector(
-    (state) => state
-  );
+  const { _persist, ...payload } = useAppSelector((state) => state);
 
   const [error, setError] = useState();
 
   const onPressPublish = async () => {
     setError(undefined);
     try {
-      const res = await createProject({
+      const res = await addProjectToFeed({
         title,
         payload,
       });
@@ -126,4 +107,4 @@ const CreateProjectButton: React.FC = () => {
   );
 };
 
-export default CreateProjectButton;
+export default AddProjectToFeed;

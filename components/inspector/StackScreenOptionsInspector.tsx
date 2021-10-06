@@ -1,5 +1,5 @@
 import React from "react";
-import IconPicker from "../IconPicker";
+import IconPicker from "./IconPicker";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
 import { Checkbox } from "react-native-paper";
 import { PlaygroundScreen } from "../../types";

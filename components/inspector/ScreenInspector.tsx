@@ -1,14 +1,15 @@
 import React from "react";
 import { Picker, View } from "react-native";
-import { RadioButton, Subheading, Title } from "react-native-paper";
+import { Checkbox, RadioButton, Subheading, Title } from "react-native-paper";
 import { editScreen as editScreenAction } from "../../redux/NavigatorReducer";
 import { useDispatch } from "react-redux";
 import { ComponentType, PlaygroundNavigatorType } from "../../types";
 import { selectScreen } from "../../redux/SelectedInspectorReducer";
 import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
-import TextWithEditFunction from "../TextWithEditFunction";
+import TextWithEditFunction from "../misc/TextWithEditFunction";
 import StackScreenOptionsInspector from "./StackScreenOptionsInspector";
-import IconPicker from "../IconPicker"; import {useAppSelector} from "../../redux/types";
+import IconPicker from "./IconPicker";
+import { useAppSelector } from "../../redux/types";
 
 const ScreenInspector: React.FC = () => {
   const screen = useAppSelector(selectScreen);

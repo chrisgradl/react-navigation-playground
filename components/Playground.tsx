@@ -1,13 +1,13 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import NavigatorList from "./NavigatorList";
-import Inspector from "./inspector/Inspector";
+import NavigatorList from "./sidebar/NavigatorList";
+import NavigatorInspector from "./inspector/NavigatorInspector";
 import ScreenInspector from "./inspector/ScreenInspector";
-import Header from "./Header";
-import VLine from "./VLine";
+import Header from "./header/Header";
+import VLine from "./misc/VLine";
 import ThemeInspector from "./theme/ThemeInspector";
 import { ActivityIndicator } from "react-native-paper";
-import PreviewContainer from "./PreviewContainer"; import {useAppSelector} from "../redux/types";
+import PreviewContainer from "./preview/PreviewContainer"; import {useAppSelector} from "../redux/types";
 
 const Content = () => {
   const inspector = useAppSelector((state) => state.inspector);
@@ -15,7 +15,7 @@ const Content = () => {
   let content;
 
   if (inspector.type === "Navigator") {
-    content = <Inspector />;
+    content = <NavigatorInspector />;
   } else if (inspector.type === "Screen") {
     content = <ScreenInspector />;
   } else if (inspector.type === "Theme") {

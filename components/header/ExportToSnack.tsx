@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
-import createCodeSnippet from "../util/CodeSnippet";
-import { Button } from "react-native-paper"; import {useAppSelector} from "../redux/types";
+import createCodeSnippet from "../../lib/code/CodeSnippet";
+import { Button } from "react-native-paper";
+import { useAppSelector } from "../../redux/types";
 
 interface Props {}
 
@@ -18,7 +19,11 @@ const dependencies = [
   "@expo/vector-icons",
 ];
 
-const ExportToSnack: React.FC<Props> = () => {
+interface Props {
+  renderButton(props: { loading: boolean; onPress(): void }): React.ReactNode;
+}
+
+const ExportToSnack: React.FC<Props> = ({ renderButton }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
   const state = useAppSelector((state) => state);
@@ -57,16 +62,10 @@ const ExportToSnack: React.FC<Props> = () => {
       <input type="hidden" name="dependencies" value={dependencies} />
       <input ref={codeInputRef} type="hidden" name="files" value={undefined} />
       <input type="hidden" name="sdkVersion" value="42.0.0" />
-      <Button
-        color={"white"}
-        icon={"open-in-new"}
-        disabled={loading}
-        onPress={openSnack}
-      >
-        Open Snack
-      </Button>
+      {renderButton({ loading, onPress: openSnack })}
     </form>
   );
 };
+
 
 export default ExportToSnack;

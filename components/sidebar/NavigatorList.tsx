@@ -2,10 +2,10 @@ import React from "react";
 import { ScrollView, View } from "react-native";
 import {  IconButton, List } from "react-native-paper";
 import AddNewNavigator from "./AddNewNavigator";
-import { ComponentType, PlaygroundScreen } from "../types";
-import { setSelectedInspector } from "../redux/SelectedInspectorReducer";
-import { deleteNavigator, deleteScreen } from "../redux/NavigatorReducer";
-import ThemeButton from "./theme/ThemeButton"; import {useAppDispatch, useAppSelector} from "../redux/types";
+import { ComponentType, PlaygroundScreen } from "../../types";
+import { setSelectedInspector } from "../../redux/SelectedInspectorReducer";
+import { deleteNavigator, deleteScreen } from "../../redux/NavigatorReducer";
+import ThemeButton from "./ThemeButton"; import {useAppDispatch, useAppSelector} from "../../redux/types";
 
 const NavigatorList: React.FC = () => {
   const navigators = useAppSelector((state) => state.navigators);

@@ -3,7 +3,7 @@ import {
   CombinedDarkTheme,
   CombinedDefaultTheme, Margherita,
 
-} from "../Themes"; import {RootState} from "./types";
+} from "../data/Themes"; import {RootState} from "./types";
 
 export type ThemeType = "default" | "dark" | "margherita";
 

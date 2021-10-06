@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import TextWithEditFunction from "../TextWithEditFunction";
+import TextWithEditFunction from "../misc/TextWithEditFunction";
 import { Caption } from "react-native-paper";
 import { InspectorItemSpace } from "../inspector/InspectorItem";
 import Color from "color";
