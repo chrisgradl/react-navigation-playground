@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import createCodeSnippet from "../../lib/code/CodeSnippet";
 import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from "prism-react-renderer/themes/vsLight"; import {useAppSelector} from "../../redux/types";
+import theme from "prism-react-renderer/themes/vsLight";
+import { useAppSelector } from "../../redux/types";
 
 const CodePanel: React.FC = () => {
   const components = useAppSelector((state) => state);
@@ -15,7 +16,9 @@ const CodePanel: React.FC = () => {
         const code = await createCodeSnippet(components, false);
         setCode(code);
       } catch (e) {
-        setError("Failed to generate Codesnippet: "+ e.message + "\n " + e.stack);
+        setError(
+          "Failed to generate Codesnippet: " + e.message + "\n " + e.stack
+        );
       }
     };
 
@@ -23,7 +26,12 @@ const CodePanel: React.FC = () => {
   }, [components]);
 
   return (
-    <View style={{ paddingHorizontal: 16 }}>
+    <ScrollView
+      contentContainerStyle={{
+        paddingVertical: 32,
+        paddingHorizontal: 16,
+      }}
+    >
       <Highlight
         {...defaultProps}
         theme={theme}
@@ -42,7 +50,7 @@ const CodePanel: React.FC = () => {
           </pre>
         )}
       </Highlight>
-    </View>
+    </ScrollView>
   );
 };
 
