@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { List } from "react-native-paper";
+import SectionContainer from "../sidebar/SectionContainer";
 
 interface Props {
   title: string;
@@ -11,15 +12,7 @@ interface Props {
 
 const MenuButton: React.FC<Props> = ({ selected, onPress, icon, title }) => {
   return (
-    <View
-      style={{
-        borderRadius: 8,
-        backgroundColor: selected
-          ? "rgba(0, 122, 255, 0.2)"
-          : "rgba(0, 122, 255, 0.1)",
-        marginBottom: 16,
-      }}
-    >
+    <SectionContainer selected={selected}>
       <List.Item
         titleStyle={
           selected && { color: "rgb(0, 122, 255)", fontWeight: "bold" }
@@ -30,7 +23,7 @@ const MenuButton: React.FC<Props> = ({ selected, onPress, icon, title }) => {
           <List.Icon icon={icon} color={selected && "rgb(0, 122, 255)"} />
         )}
       />
-    </View>
+    </SectionContainer>
   );
 };
 

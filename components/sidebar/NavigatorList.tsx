@@ -5,6 +5,7 @@ import { setSelectedInspector } from "../../redux/SelectedInspectorReducer";
 import { deleteNavigator, deleteScreen } from "../../redux/NavigatorReducer";
 import { useAppDispatch, useAppSelector } from "../../redux/types";
 import NavItem from "./NavItem";
+import SectionContainer from "./SectionContainer";
 
 const NavigatorList: React.FC = () => {
   const navigators = useAppSelector((state) => state.navigators);
@@ -18,13 +19,9 @@ const NavigatorList: React.FC = () => {
   return (
     <>
       {navigatorArray.map(({ id, name, screens, type }) => (
-        <View
+        <SectionContainer
           key={id}
-          style={{
-            borderRadius: 8,
-            backgroundColor: "Navigator" && id === inspector.navigatorId ? "rgba(0, 122, 255, 0.2)": "rgba(0, 122, 255, 0.1)",
-            marginBottom: 16,
-          }}
+          selected={"Navigator" && id === inspector.navigatorId}
         >
           <NavItem
             onPressDelete={() => dispatch(deleteNavigator(id))}
@@ -45,6 +42,7 @@ const NavigatorList: React.FC = () => {
           <View style={{ paddingLeft: 16 }}>
             {Object.values(screens).map((screen) => (
               <NavItem
+                key={screen.id}
                 selected={screen.id === inspector.screenId}
                 onPress={() =>
                   dispatch(
@@ -60,12 +58,11 @@ const NavigatorList: React.FC = () => {
                     deleteScreen({ navigatorId: id, screenId: screen.id })
                   )
                 }
-                key={screen.id}
                 title={getTitleFromScreen(screen, navigators)}
               />
             ))}
           </View>
-        </View>
+        </SectionContainer>
       ))}
     </>
   );
@@ -79,5 +76,7 @@ const getTitleFromScreen = (screen: PlaygroundScreen, navigators: any) => {
       : " -> View")
   );
 };
+
+
 
 export default NavigatorList;
