@@ -7,12 +7,13 @@ import Header from "./header/Header";
 import VLine from "./misc/VLine";
 import ThemeInspector from "./theme/ThemeInspector";
 import { ActivityIndicator } from "react-native-paper";
-import PreviewContainer from "./preview/PreviewContainer"; import {useAppSelector} from "../redux/types";
+import PreviewContainer from "./preview/PreviewContainer";
+import { useAppSelector } from "../redux/types";
 
 const Content = () => {
   const inspector = useAppSelector((state) => state.inspector);
 
-  let content;
+  let content = null;
 
   if (inspector.type === "Navigator") {
     content = <NavigatorInspector />;
@@ -22,7 +23,7 @@ const Content = () => {
     content = <ThemeInspector />;
   }
 
-  return <ScrollView>{content}</ScrollView>;
+  return <ScrollView style={{ flex: 1, padding: 16 }}>{content}</ScrollView>;
 };
 
 export default function Playground({ isLoading = false }) {
@@ -33,13 +34,16 @@ export default function Playground({ isLoading = false }) {
         <ActivityIndicator size={"large"} style={{ marginTop: 16 }} />
       ) : (
         <View style={{ flex: 1, flexDirection: "row" }}>
-          <View style={{ flex: 1, paddingHorizontal: 16, backgroundColor: "#fafafa" }}>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 16,
+            }}
+          >
             <Sidebar />
           </View>
           <VLine />
-          <View style={{ flex: 1, padding: 16 }}>
-            <Content />
-          </View>
+          <Content />
           <VLine />
           <View style={{ flex: 2 }}>
             <PreviewContainer />

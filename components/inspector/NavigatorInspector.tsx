@@ -1,17 +1,13 @@
 import React from "react";
-import { View } from "react-native";
-import { addScreen, editNavigator } from "../../redux/NavigatorReducer";
-import { Button, Caption, Checkbox, Title } from "react-native-paper";
-import { selectRootId, setRootId } from "../../redux/RootIdReducer";
-import InspectorItem, { InspectorItemSpace } from "./InspectorItem";
-import {
-  selectNavigator,
-  setSelectedInspector,
-} from "../../redux/SelectedInspectorReducer";
+import {addScreen, editNavigator} from "../../redux/NavigatorReducer";
+import {Button, Checkbox, Title} from "react-native-paper";
+import {selectRootId, setRootId} from "../../redux/RootIdReducer";
+import InspectorItem, {InspectorItemSpace} from "./InspectorItem";
+import {selectNavigator} from "../../redux/SelectedInspectorReducer";
 import NavigationTypeItem from "./NavigationTypeItem";
-import { nanoid } from "nanoid";
+import {nanoid} from "nanoid";
 import TextWithEditFunction from "../misc/TextWithEditFunction";
-import { useAppDispatch, useAppSelector } from "../../redux/types";
+import {useAppDispatch, useAppSelector} from "../../redux/types";
 
 const NavigatorInspector: React.FC = () => {
   const navigator = useAppSelector(selectNavigator);
@@ -28,14 +24,27 @@ const NavigatorInspector: React.FC = () => {
 
   const isRootNav = id === rootID;
 
+  const pressSetTabBarLabel = () =>
+    dispatch(
+      editNavigator({
+        id,
+        data: { tabBarShowLabel: !navigator.tabBarShowLabel },
+      })
+    );
+
+  const pressAddScreen = () => {
+    const screenId = nanoid();
+    dispatch(addScreen({ navigatorId: id, screenId }));
+  };
+
   return (
-    <View>
+    <>
       <TextWithEditFunction
         label={"Name"}
         value={name}
-        onValueChangeSubmit={(value) => {
-          dispatch(editNavigator({ id, data: { name: value } }));
-        }}
+        onValueChangeSubmit={(value) =>
+          dispatch(editNavigator({ id, data: { name: value } }))
+        }
       />
       <InspectorItemSpace />
       <InspectorItem>
@@ -52,39 +61,20 @@ const NavigatorInspector: React.FC = () => {
         value={navigator.type}
       />
       <InspectorItemSpace />
-
       <InspectorItem>
         <Checkbox.Item
-          onPress={() =>
-            dispatch(
-              editNavigator({
-                id,
-                data: { tabBarShowLabel: !navigator.tabBarShowLabel },
-              })
-            )
-          }
+          onPress={pressSetTabBarLabel}
           label="tabBarShowLabel"
           status={navigator.tabBarShowLabel ? "checked" : "unchecked"}
-
         />
       </InspectorItem>
 
       <InspectorItemSpace />
-      <Button
-        mode={"contained"}
-        icon={"plus"}
-        onPress={() => {
-          const screenId = nanoid();
-          dispatch(addScreen({ navigatorId: id, screenId }));
-          dispatch(
-            setSelectedInspector({ type: "Screen", navigatorId: id, screenId })
-          );
-        }}
-      >
+      <Button mode={"contained"} icon={"plus"} onPress={pressAddScreen}>
         Add new Screen
       </Button>
       <InspectorItemSpace />
-    </View>
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ const NavigationTypeItem: React.FC<{
   value: PlaygroundNavigatorType;
 }> = ({ value, onChange }) => {
   return (
-    <InspectorItem style={{ padding: 8 }}>
+    <InspectorItem style={{ padding: 16 }}>
       <Subheading>Navigator Type</Subheading>
       <RadioButton.Group value={value} onValueChange={onChange as any}>
         {Object.values(PlaygroundNavigatorType).map((item) => (

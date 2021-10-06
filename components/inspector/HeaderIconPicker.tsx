@@ -5,6 +5,7 @@ import Overlay from "../misc/Overlay";
 import InspectorItem from "./InspectorItem";
 import { HeaderIcon } from "../../types";
 import SelectNavigatorOverlay from "./SelectNavigatorOverlay";
+import SimpleIconPicker from "../misc/SimpleIconPicker";
 
 export const iconList = Object.keys(
   require("@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/MaterialCommunityIcons.json")
@@ -14,44 +15,10 @@ interface Props {
   label: string;
   value: HeaderIcon;
   onValueChange(value: HeaderIcon): void;
-  isIconPickerHeader?: boolean;
 }
 
-const IconPicker: React.FC<Props> = ({
-  onValueChange,
-  value,
-  label,
-  isIconPickerHeader = false,
-}) => {
-  const [show, setShowModal] = useState<boolean>(false);
+const HeaderIconPicker: React.FC<Props> = ({ onValueChange, value, label }) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [filterTerm, setFilterTerm] = useState<string>(undefined);
-
-  const getFilteredItems = () => {
-    if (!filterTerm || filterTerm.length === 0) {
-      return iconList;
-    } else {
-      return iconList.filter((value) =>
-        value?.toLowerCase().includes(filterTerm?.toLowerCase())
-      );
-    }
-  };
-
-  const closeModal = () => setShowModal(false);
-
-  const renderItem = (item) => {
-    return (
-      <Button
-        icon={item.item}
-        onPress={() => {
-          onValueChange({ ...value, icon: item.item });
-          closeModal();
-        }}
-      >
-        {item.item}
-      </Button>
-    );
-  };
 
   if (!value) {
     return (
@@ -101,39 +68,42 @@ const IconPicker: React.FC<Props> = ({
           }}
         >
           <Subheading>Icon</Subheading>
+          <SimpleIconPicker
+            value={icon}
+            onSelect={(nextIcon) => onValueChange({ ...value, icon: nextIcon })}
+            renderButton={({ onPress }) => (
+              <Button
+                onPress={onPress}
+                contentStyle={{ justifyContent: "flex-start" }}
+                icon={icon}
+              >
+                {icon || "No Icon Selected"}
+              </Button>
+            )}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Subheading>Action</Subheading>
           <Button
-            onPress={() => setShowModal(true)}
+            onPress={() =>
+              onValueChange({
+                ...value,
+                action:
+                  value.action === "toggleDrawer" ? "navigate" : "toggleDrawer",
+              })
+            }
             contentStyle={{ justifyContent: "flex-start" }}
-            icon={icon}
           >
-            {icon || "No Icon Selected"}
+            {action}
           </Button>
         </View>
-        {!isIconPickerHeader && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Subheading>Action</Subheading>
-            <Button
-              onPress={() =>
-                onValueChange({
-                  ...value,
-                  action:
-                    value.action === "toggleDrawer"
-                      ? "navigate"
-                      : "toggleDrawer",
-                })
-              }
-              contentStyle={{ justifyContent: "flex-start" }}
-            >
-              {action}
-            </Button>
-          </View>
-        )}
+
         {action === "navigate" && (
           <View
             style={{
@@ -151,7 +121,6 @@ const IconPicker: React.FC<Props> = ({
             </Button>
           </View>
         )}
-
         <SelectNavigatorOverlay
           onDismiss={() => setShowMenu(false)}
           visible={showMenu}
@@ -160,23 +129,9 @@ const IconPicker: React.FC<Props> = ({
             setShowMenu(false);
           }}
         />
-
-        <Overlay
-          dismissable={true}
-          onDismiss={closeModal}
-          visible={show}
-          height={500}
-        >
-          <Searchbar value={filterTerm} onChangeText={setFilterTerm} />
-          <FlatList
-            keyExtractor={(item) => item}
-            data={getFilteredItems()}
-            renderItem={renderItem}
-          />
-        </Overlay>
       </View>
     </InspectorItem>
   );
 };
 
-export default IconPicker;
+export default HeaderIconPicker;
