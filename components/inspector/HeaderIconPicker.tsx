@@ -5,7 +5,7 @@ import Overlay from "../misc/Overlay";
 import InspectorItem from "./InspectorItem";
 import { HeaderIcon } from "../../types";
 import SelectNavigatorOverlay from "./SelectNavigatorOverlay";
-import SimpleIconPicker from "../misc/SimpleIconPicker";
+import IconPicker from "../misc/IconPicker";
 
 export const iconList = Object.keys(
   require("@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/MaterialCommunityIcons.json")
@@ -68,7 +68,7 @@ const HeaderIconPicker: React.FC<Props> = ({ onValueChange, value, label }) => {
           }}
         >
           <Subheading>Icon</Subheading>
-          <SimpleIconPicker
+          <IconPicker
             value={icon}
             onSelect={(nextIcon) => onValueChange({ ...value, icon: nextIcon })}
             renderButton={({ onPress }) => (

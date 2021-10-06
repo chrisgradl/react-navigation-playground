@@ -10,7 +10,7 @@ interface Props {
   renderButton({ onPress }): React.ReactNode;
 }
 
-const SimpleIconPicker: React.FC<Props> = ({
+const IconPicker: React.FC<Props> = ({
   value,
   onSelect,
   renderButton,
@@ -64,4 +64,4 @@ const SimpleIconPicker: React.FC<Props> = ({
   );
 };
 
-export default SimpleIconPicker;
+export default IconPicker;

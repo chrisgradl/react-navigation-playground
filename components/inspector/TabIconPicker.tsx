@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import { HeaderIcon } from "../../types";
 import InspectorItem from "./InspectorItem";
 import { Button, Subheading } from "react-native-paper";
-import SimpleIconPicker from "../misc/SimpleIconPicker";
+import IconPicker from "../misc/IconPicker";
 
 interface Props {
   icon: string;
@@ -21,7 +21,7 @@ const TabIconPicker: React.FC<Props> = ({ icon, onValueChange }) => {
         }}
       >
         <Subheading  numberOfLines={1}>Tab Icon</Subheading>
-        <SimpleIconPicker
+        <IconPicker
           value={icon}
           onSelect={onValueChange}
           renderButton={({ onPress }) => (
