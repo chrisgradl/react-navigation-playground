@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import NavigatorList from "./sidebar/NavigatorList";
+import Sidebar from "./sidebar/Sidebar";
 import NavigatorInspector from "./inspector/NavigatorInspector";
 import ScreenInspector from "./inspector/ScreenInspector";
 import Header from "./header/Header";
@@ -33,8 +33,8 @@ export default function Playground({ isLoading = false }) {
         <ActivityIndicator size={"large"} style={{ marginTop: 16 }} />
       ) : (
         <View style={{ flex: 1, flexDirection: "row" }}>
-          <View style={{ flex: 1, padding: 16, backgroundColor: "#fafafa" }}>
-            <NavigatorList />
+          <View style={{ flex: 1, paddingHorizontal: 16, backgroundColor: "#fafafa" }}>
+            <Sidebar />
           </View>
           <VLine />
           <View style={{ flex: 1, padding: 16 }}>

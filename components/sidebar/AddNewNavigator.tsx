@@ -8,6 +8,18 @@ import { useAppDispatch } from "../../redux/types";
 
 const AddNewNavigator: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  const onPress = () => {
+    const id = nanoid();
+    dispatch(addNavigator(id));
+    dispatch(
+      setSelectedInspector({
+        type: "Navigator",
+        screenId: undefined,
+        navigatorId: id,
+      })
+    );
+  };
   return (
     <View
       style={{
@@ -17,7 +29,7 @@ const AddNewNavigator: React.FC = () => {
       }}
     >
       <List.Item
-        left={(props) => (
+        left={() => (
           <IconButton
             icon={"plus-circle"}
             color={"rgb(0, 122, 255)"}
@@ -25,17 +37,7 @@ const AddNewNavigator: React.FC = () => {
           />
         )}
         title={"Add Navigator"}
-        onPress={() => {
-          const id = nanoid();
-          dispatch(addNavigator(id));
-          dispatch(
-            setSelectedInspector({
-              type: "Navigator",
-              screenId: undefined,
-              navigatorId: id,
-            })
-          );
-        }}
+        onPress={onPress}
       />
     </View>
   );
