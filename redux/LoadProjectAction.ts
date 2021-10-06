@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { TemplateDrawer, TemplateTabs } from "./Templates"; import {RootState} from "./types";
+import { TemplateDrawer, TemplateTabs } from "../data/Templates"; import {RootState} from "./types";
 
 export const loadProject = createAction<Partial<RootState>>("loadProject");
 

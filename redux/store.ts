@@ -12,7 +12,7 @@ import storage from "redux-persist/lib/storage";
 import { useMemo } from "react";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import rootReducer from "./RootReducer";
-import { TemplateTabs } from "./Templates";
+import { TemplateTabs } from "../data/Templates";
 
 const persistConfig = {
   key: "root",

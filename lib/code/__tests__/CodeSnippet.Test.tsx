@@ -1,6 +1,6 @@
 import React from "react";
 import createCodeSnippet from "../CodeBuilder";
-import { TemplateDrawer, TemplateTabs } from "../../../redux/Templates";
+import { TemplateDrawer, TemplateTabs } from "../../../data/Templates";
 
 it("should convert Drawer Template to CodeSnippet", async () => {
   const code = await createCodeSnippet(TemplateDrawer as any);
