@@ -1,6 +1,6 @@
 import {PlaygroundState} from "../types";
 import {useEffect, useState} from "react";
-import createCodeSnippet from "./code/CodeSnippet";
+import createCodeSnippet from "./code/CodeBuilder";
 import getCodeComponent from "./code/getCodeComponent";
 
 export default function useCreateComponentFromState(project: PlaygroundState) {

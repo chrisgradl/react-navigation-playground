@@ -3,8 +3,9 @@ import ErrorBoundary from "../misc/ErrorBoundary";
 import React from "react";
 import { ActivityIndicator, Paragraph } from "react-native-paper";
 import useCreateComponentFromState from "../../lib/useCreateComponentFromState";
+import {PlaygroundState} from "../../types";
 
-export default function LivePreview({ project }) {
+export default function LivePreview({ project }: {project: PlaygroundState}) {
   const { error, loading, Component } = useCreateComponentFromState(project);
 
   if (error) {

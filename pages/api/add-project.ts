@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
 import redis from "../../lib/redis";
-import createCodeSnippet from "../../lib/code/CodeSnippet";
+import createCodeSnippet from "../../lib/code/CodeBuilder";
 import {Project, ProjectPost} from "../../types";
 
 export default async function addProject(
