@@ -1,5 +1,5 @@
-import {CombinedDarkTheme, CombinedDefaultTheme} from "./data/Themes";
 import {RootState} from "./redux/types";
+import {Theme} from "@react-navigation/native";
 
 export enum PlaygroundNavigatorType {
   Stack = "Stack",
@@ -49,7 +49,7 @@ export type NavigatorRecord = Record<string, PlaygroundNavigator>;
 export interface PlaygroundState {
   rootId: string;
   navigators: NavigatorRecord;
-  theme: typeof CombinedDarkTheme | typeof CombinedDefaultTheme;
+  theme: Theme;
 }
 
 export interface Project {

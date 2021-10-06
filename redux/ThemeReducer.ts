@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  CombinedDarkTheme,
-  CombinedDefaultTheme, Margherita,
+  TemplateDefaultTheme,
+  TemplateDarkTheme, Margherita,
 
 } from "../data/Themes"; import {RootState} from "./types";
 
@@ -9,16 +9,16 @@ export type ThemeType = "default" | "dark" | "margherita";
 
 
 const slice = createSlice({
-  initialState: CombinedDefaultTheme,
+  initialState: TemplateDefaultTheme,
   name: "Theme",
   reducers: {
     setTheme: (state, action: PayloadAction<ThemeType>) => {
       if (action.payload === "dark") {
-        return CombinedDarkTheme;
+        return TemplateDarkTheme;
       } else if (action.payload === "margherita") {
         return Margherita;
       } else {
-        return CombinedDefaultTheme;
+        return TemplateDefaultTheme;
       }
     },
     setThemeColor: (
