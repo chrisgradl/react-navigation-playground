@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
-import createCodeSnippet from "../../lib/code/CodeBuilder";
+import createCodeSnippet from "../../lib/code/createCodeSnippet";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/vsLight";
 import { useAppSelector } from "../../redux/types";

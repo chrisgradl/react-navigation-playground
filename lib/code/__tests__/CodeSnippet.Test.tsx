@@ -1,5 +1,5 @@
 import React from "react";
-import createCodeSnippet from "../CodeBuilder";
+import createCodeSnippet from "../createCodeSnippet";
 import { TemplateDrawer, TemplateTabs } from "../../../data/Templates";
 
 it("should convert Drawer Template to CodeSnippet", async () => {

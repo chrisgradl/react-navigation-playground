@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import createCodeSnippet from "../../lib/code/CodeBuilder";
+import createCodeSnippet from "../../lib/code/createCodeSnippet";
 import { Button } from "react-native-paper";
 import { useAppSelector } from "../../redux/types";
 

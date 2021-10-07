@@ -1,15 +1,16 @@
 import {
-  HeaderIcon,
-  NavigatorRecord,
-  PlaygroundNavigatorType,
-  PlaygroundScreen,
-  PlaygroundState,
+    HeaderIcon,
+    NavigatorRecord,
+    PlaygroundNavigator,
+    PlaygroundNavigatorType,
+    PlaygroundScreen,
+    PlaygroundState,
 } from "../../types";
-import { navState } from "./getCodeComponent";
+import {navState} from "./getCodeComponent";
 
 export const SimplePage = `const SimplePage = () => <View><Text>Basic View</Text></View>`;
 
-export const headerIconButton = `const HeaderIcon = (props) => {
+export const HeaderIconButton = `const HeaderIcon = (props) => {
   const {colors} = useTheme()
   const {text} = colors
   return (
@@ -40,6 +41,21 @@ export function createImports(state: PlaygroundState) {
   import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
   ${types.map((type) => importLinesForNavigators[type]).join("\n")}
   `;
+}
+
+export function createAppComponent(children: string, expoExport?: boolean) {
+    //the NavigationContainer props are only inserted in the editor
+    const props = expoExport ? "" : getEditorSpecificNavigationContainerProps();
+    return `
+    export default function App() {
+    return (
+      <SafeAreaProvider>
+          <NavigationContainer ${props} theme={theme}>
+            ${children}
+          </NavigationContainer>
+      </SafeAreaProvider>
+    );
+  };`;
 }
 
 export const createNavigatorConst = (name, type) => {
@@ -80,7 +96,7 @@ export const getScreenOptions = ({
   tabbarIcon,
 }: PlaygroundScreen) => {
   return `options={({navigation}) => ({
-        ${
+    ${
           tabbarIcon?.icon
             ? `tabBarIcon: (props) => <Icon {...props} name={"${tabbarIcon.icon}"} />,`
             : ""
@@ -133,4 +149,39 @@ export function createChildrenScreens(
     )
     .join("\n");
   return children;
+}
+
+
+
+const createNavigator = (
+    {name, type, screens, tabBarShowLabel}: PlaygroundNavigator,
+    navigators: NavigatorRecord
+) => {
+
+    const componentName = name + "Component";
+
+    const children = createChildrenScreens(screens, name, navigators);
+
+    const screenOptions =
+        !tabBarShowLabel && type === "Tab"
+            ? `screenOptions={{tabBarShowLabel: ${tabBarShowLabel}}}`
+            : "";
+
+    return `
+    ${createNavigatorConst(name, type)}
+    
+    function ${componentName} () {
+        return (
+            <${name}.Navigator ${screenOptions} >
+                ${children}
+            </${name}.Navigator>
+        )
+    }
+  `;
+};
+
+export function createNavigators(navigators: NavigatorRecord) {
+    return Object.values(navigators)
+        .map((navigator) => createNavigator(navigator, navigators))
+        .join("\n");
 }
