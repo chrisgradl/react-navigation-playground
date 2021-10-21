@@ -14,7 +14,7 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "connect-src 'self';",
+            value: "connect-src 'self' https://cloudflareinsights.com;",
           },
         ],
       },
