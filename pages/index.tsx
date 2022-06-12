@@ -49,7 +49,6 @@ export default function Main() {
 
   return (
     <ScrollView
-      style={{ flex: 1 }}
       contentContainerStyle={{ flex: 1, minWidth: 1000 }}
       horizontal={true}
     >

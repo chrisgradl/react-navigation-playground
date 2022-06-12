@@ -51,7 +51,6 @@ export function ColorItem({
         />
       </View>
       <InspectorItemSpace />
-      <InspectorItemSpace />
     </React.Fragment>
   );
 }

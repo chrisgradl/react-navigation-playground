@@ -40,10 +40,10 @@ export default function Playground({ isLoading = false }) {
               paddingHorizontal: 16,
             }}
           >
-            <Sidebar />
+
           </View>
           <VLine />
-          <Content />
+
           <VLine />
           <View style={{ flex: 2 }}>
             <PreviewContainer />
